@@ -5,6 +5,8 @@ var express = require('express'),
   http = require('http').Server(app),
   io = require('socket.io')(http);
 
+app.use('/public', express.static(__dirname + '/public'));
+
 app.get('/', function(req, res) {
   res.sendfile('./index.html');
 });
@@ -14,8 +16,14 @@ io.on('connection', function(socket) {
   socket.on('disconnect', function() {
     console.log('user disconnected');
   });
-  socket.on('chat message', function(msg){
-    io.emit('chat message', msg);
+  socket.on('play', function(){
+    io.emit('play');
+  });
+  socket.on('pause', function(){
+    io.emit('pause');
+  });
+  socket.on('timeupdate', function(at) {
+    io.emit('timeupdate', at);
   });
 });
 
