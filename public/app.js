@@ -25,7 +25,7 @@ socket
   .on('timeupdate', function(at) {
     var currentTime = $video[0].currentTime,
       difference = Math.max(currentTime, at) - Math.min(currentTime, at),
-      allowedDifference = 0.1;
+      allowedDifference = 0.5;
     if (difference > allowedDifference) {
       $video[0].currentTime = at;
     }

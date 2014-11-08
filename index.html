@@ -2,13 +2,26 @@
 <html>
   <head>
     <title>Movie share</title>
+    <style type="text/css">
+      .fileHandler {
+        border:2px dotted #0B85A1;
+        width:400px;
+        color:#92AAB0;
+        text-align:left;vertical-align:middle;
+        padding:10px 10px 10 10px;
+        margin-bottom:10px;
+        font-size:200%;
+      }
+    </style>
   </head>
   <body>
-    <video id="js-video" src="/public/test.mp4" controls>
+    <div id="js-dragDropFileHandler" class="fileHandler">Drag & Drop a movie here.</div>
+    <video id="js-video" width="320" height="240" controls>
       Your browser does not support HTML5 video.
     </video>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="/public/jquery-2.1.1.js"></script>
     <script src="/public/app.js"></script>
+    <script src="/public/drag-drop-file.js"></script>
   </body>
 </html>
