@@ -1,7 +1,9 @@
 'use strict';
 
 var socket = io(),
-  $video = $('#js-video');
+  $video = $('#js-video'),
+  allowedDifference = 0.5,
+  lastTime;
 
 $video
   .on('play', function() {
@@ -11,8 +13,13 @@ $video
     socket.emit('pause');
   })
   .on('timeupdate', function() {
-    var currentTime = $video[0].currentTime;
-    socket.emit('timeupdate', currentTime);
+    var currentTime = $video[0].currentTime,
+      difference = Math.max(currentTime, lastTime) - 
+        Math.min(currentTime, lastTime);
+    if (difference > allowedDifference) {
+      socket.emit('timeupdate', currentTime);
+    }
+    lastTime = currentTime;
   });
 
 socket
@@ -24,8 +31,7 @@ socket
   })
   .on('timeupdate', function(at) {
     var currentTime = $video[0].currentTime,
-      difference = Math.max(currentTime, at) - Math.min(currentTime, at),
-      allowedDifference = 0.5;
+      difference = Math.max(currentTime, at) - Math.min(currentTime, at);
     if (difference > allowedDifference) {
       $video[0].currentTime = at;
     }
