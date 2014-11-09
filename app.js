@@ -16,10 +16,10 @@ io.on('connection', function(socket) {
   socket.on('disconnect', function() {
     console.log('user disconnected');
   });
-  socket.on('play', function(){
+  socket.on('play', function() {
     socket.broadcast.emit('play');
   });
-  socket.on('pause', function(){
+  socket.on('pause', function() {
     socket.broadcast.emit('pause');
   });
   socket.on('timeupdate', function(at) {
