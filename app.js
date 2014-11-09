@@ -17,13 +17,13 @@ io.on('connection', function(socket) {
     console.log('user disconnected');
   });
   socket.on('play', function(){
-    io.emit('play');
+    socket.broadcast.emit('play');
   });
   socket.on('pause', function(){
-    io.emit('pause');
+    socket.broadcast.emit('pause');
   });
   socket.on('timeupdate', function(at) {
-    io.emit('timeupdate', at);
+    socket.broadcast.emit('timeupdate', at);
   });
 });
 
