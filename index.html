@@ -2,26 +2,32 @@
 <html>
   <head>
     <title>Movie share</title>
-    <style type="text/css">
-      .fileHandler {
-        border:2px dotted #0B85A1;
-        width:400px;
-        color:#92AAB0;
-        text-align:left;vertical-align:middle;
-        padding:10px 10px 10 10px;
-        margin-bottom:10px;
-        font-size:200%;
-      }
-    </style>
+    <link rel="stylesheet" href="/public/assets/css/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="/public/assets/css/main.css">
   </head>
   <body>
-    <div id="js-dragDropFileHandler" class="fileHandler">Drag & Drop a movie here.</div>
-    <video id="js-video" width="520" height="240" controls>
-      Your browser does not support HTML5 video.
-    </video>
-    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-    <script src="/public/jquery-2.1.1.js"></script>
-    <script src="/public/app.js"></script>
-    <script src="/public/drag-drop-file.js"></script>
+   
+  <div class="container">
+    
+    <div class="header">
+      <h3 class="text-muted">Movie Share</h3>
+      <h5 id="js-fileName"></h5>
+      <hr>
+    </div>
+
+    <div class="app">
+      <div id="js-dragDropFileHandler" class="fileHandler">Drag and drop a movie here</div>
+      <video id="js-video" class="is-hidden" controls>
+        Your browser does not support HTML5 video.
+      </video>
+    </div>
+
+  </div> <!-- /container -->
+   
   </body>
 </html>
+
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+<script src="/public/scripts/vendors/jquery/jquery-2.1.1.js"></script>
+<script src="/public/scripts/vendors/bootstrap/bootstrap.js"></script>
+<script src="/public/scripts/src/app.js"></script>

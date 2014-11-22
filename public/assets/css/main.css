@@ -1,0 +1,18 @@
+.fileHandler {
+  width: 400px;
+  color: #92AAB0;
+  text-align: center;
+  vertical-align: middle;
+  padding: 10px 10px 10 10px;
+  margin: auto;
+  font-size: 200%;
+}
+
+.is-hidden {
+  display: none;
+}
+
+#js-video {
+  margin: auto;
+  width: 100%;
+}

@@ -6,7 +6,6 @@ var express = require('express'),
   io = require('socket.io')(http),
   video = {
     users: {},
-    // paused: true,
     startedAt: null,
     at: null,
   },
