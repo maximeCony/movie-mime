@@ -12,7 +12,7 @@ var socket = io(),
 var handleFile = function(file) {
   $handler.hide();
   $video.fadeIn();
-  $fileName.text(file.name);
+  $fileName.text(file.name).fadeIn();
   $video[0].src = _URL.createObjectURL(file);
 };
 
@@ -63,23 +63,6 @@ socket
 
 // Drag and drop
 
-$handler
-  .on('dragenter', function(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    $(this).css('border', '2px dotted');
-  })
-  .on('dragover', function(e) {
-    e.stopPropagation();
-    e.preventDefault();
-  })
-  .on('drop', function(e) {
-    // $(this).css('border', '2px dotted');
-    e.preventDefault();
-    var files = e.originalEvent.dataTransfer.files;
-    handleFile(files[0]);
-  });
-
 $(document)
   .on('dragenter', function(e) {
     e.stopPropagation();
@@ -88,9 +71,16 @@ $(document)
   .on('dragover', function(e) {
     e.stopPropagation();
     e.preventDefault();
-    // $handler.css('border', '2px dotted');
+    $handler.css('color', '#92AAB0');
+  })
+  .on('dragleave', function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    $handler.css('color', 'black');
   })
   .on('drop', function(e) {
     e.stopPropagation();
     e.preventDefault();
+    var files = e.originalEvent.dataTransfer.files;
+    handleFile(files[0]);
   });
