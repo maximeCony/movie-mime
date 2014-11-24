@@ -1,6 +1,14 @@
+body {
+  color: #777;
+}
+
 .fileHandler {
   width: 100%;
   text-align: center;
+}
+
+.fileHandler-dragOver {
+  color: #92AAB0;
 }
 
 .is-hidden {
@@ -10,4 +18,12 @@
 #js-video {
   margin: auto;
   width: 100%;
+}
+
+#usernameInput {
+  float: right;
+  border: none;
+  font-size: 1.3em;
+  outline: none;
+  text-align: right;
 }

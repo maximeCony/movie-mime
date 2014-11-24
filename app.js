@@ -17,36 +17,58 @@ app.get('/', function(req, res) {
   res.sendfile('./index.html');
 });
 
-var requireUpdate = function(serverDifference, clientDifference) {
-  var max = Math.max(serverDifference, clientDifference),
+var requireUpdate = function(serverVideo, clientVideo) {
+  var serverDifference = (serverVideo.startedAt / 1000) - serverVideo.at,
+    clientDifference = (clientVideo.timestamp / 1000) - clientVideo.at,
+    max = Math.max(serverDifference, clientDifference),
     min = Math.min(serverDifference, clientDifference),
     difference = max - min;
   return difference > allowedDifference;
 };
 
 io.on('connection', function(socket) {
+  
   video.users[socket.id] = {
     socket: socket,
+    username: null,
   };
   var user = video.users[socket.id];
+  
   socket.on('disconnect', function() {
     delete video.users[socket.id];
   });
-  socket.on('play', function(params) {
+  
+  socket.on('video:play', function(params) {
     video.startedAt = params.timestamp;
     video.at = params.at;
-    socket.broadcast.emit('play', params.at);
+    socket.broadcast.emit('video:play', params.at);
   });
-  socket.on('pause', function() {
-    socket.broadcast.emit('pause');
+  
+  socket.on('video:pause', function() {
+    socket.broadcast.emit('video:pause');
   });
-  socket.on('timeupdate', function(params) {
-    var serverDifference = (video.startedAt / 1000) - video.at,
-      clientDifference = (params.timestamp / 1000) - params.at;
-    if (requireUpdate(serverDifference, clientDifference)) {
-      user.socket.emit('updatetime', params.at);
+  
+  socket.on('video:timeupdate', function(params) {
+    if (requireUpdate(video, params)) {
+      user.socket.emit('video:updatetime', params.at);
     }
   });
+
+  socket.on('video:ready', function(filename) {
+    socket.broadcast.emit('alert', {
+      type: 'info',
+      message: user.username + ' has lauched ' + filename,
+    });
+  });
+
+  socket.on('set:username', function(username) {
+    user.username = username;
+    socket.broadcast.emit('set:username', {
+      userId: user.id,
+      username: user.username,
+    });
+  });
+
 });
 
 http.listen(process.env.PORT, function() {

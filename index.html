@@ -10,8 +10,10 @@
   <div class="container">
     
     <div class="header">
+      <input id="usernameInput" class="is-hidden" type="text" placeholder="What's your name?">
       <h3 class="text-muted">M<span style="color:pink;">❤</span>vie Share</h3>
       <hr>
+      <div id="js-alerts"></div>
     </div>
 
     <div class="app">
@@ -28,6 +30,17 @@
    
   </body>
 </html>
+
+<!-- Alert template -->
+<script type="text/template" id="alert-template">
+  <div class="alert alert-{type} alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+      <span aria-hidden="true">×</span>
+      <span class="sr-only">Close</span>
+    </button>
+    {message}
+  </div>
+</script>
 
 <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 <script src="/public/scripts/vendors/jquery/jquery-2.1.1.js"></script>

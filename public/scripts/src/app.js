@@ -5,6 +5,7 @@ var socket = io(),
   $video = $('#js-video'),
   $handler = $('#js-dragDropFileHandler'),
   $fileName = $('#js-fileName'),
+  $usernameInput = $('#usernameInput'),
   allowedDifference = 0.7,
   emitPlay = true,
   emitPause = true;
@@ -24,6 +25,11 @@ var updateCurrentTime = function(at) {
   }
 };
 
+var createAlert = function(type, message) {
+  console.log(type, message);
+  // TODO!
+};
+
 $video
   .on('play', function() {
     if (!emitPlay) return emitPlay = true;
@@ -31,34 +37,37 @@ $video
       at: $video[0].currentTime, 
       timestamp: Date.now(),
     };
-    socket.emit('play', params);
+    socket.emit('video:play', params);
   })
   .on('pause', function() {
     if (!emitPause) return emitPause = true;
-    socket.emit('pause');
+    socket.emit('video:pause');
   })
   .on('timeupdate', function() {
     var params = {
       at: $video[0].currentTime, 
       timestamp: Date.now(),
     };
-    socket.emit('timeupdate', params);
+    socket.emit('video:timeupdate', params);
   });
 
 socket
-  .on('play', function(at) {
+  .on('video:play', function(at) {
     // prevent to re-emit play
     updateCurrentTime(at);
     emitPlay = false;
     $video[0].play();
   })
-  .on('pause', function() {
+  .on('video:pause', function() {
     // prevent to re-emit pause
     emitPause = false;
     $video[0].pause();
   })
-  .on('updatetime', function(at) {
+  .on('video:updatetime', function(at) {
     updateCurrentTime(at);
+  })
+  .on('video:updatetime', function(params) {
+    createAlert(params.type, params.message);
   });
 
 // Drag and drop
@@ -71,12 +80,12 @@ $(document)
   .on('dragover', function(e) {
     e.stopPropagation();
     e.preventDefault();
-    $handler.css('color', '#92AAB0');
+    $handler.addClass('fileHandler-dragOver');
   })
   .on('dragleave', function(e) {
     e.stopPropagation();
     e.preventDefault();
-    $handler.css('color', 'black');
+    $handler.removeClass('fileHandler-dragOver');
   })
   .on('drop', function(e) {
     e.stopPropagation();
@@ -84,3 +93,5 @@ $(document)
     var files = e.originalEvent.dataTransfer.files;
     handleFile(files[0]);
   });
+
+$usernameInput.focus();
