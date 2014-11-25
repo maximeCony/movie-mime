@@ -17,8 +17,8 @@ app.get('/', function(req, res) {
   res.sendfile('./index.html');
 });
 
-var requireUpdate = function(serverVideo, clientVideo) {
-  var serverDifference = (serverVideo.startedAt / 1000) - serverVideo.at,
+var requireUpdate = function(video, clientVideo) {
+  var serverDifference = (video.startedAt / 1000) - video.at,
     clientDifference = (clientVideo.timestamp / 1000) - clientVideo.at,
     max = Math.max(serverDifference, clientDifference),
     min = Math.min(serverDifference, clientDifference),
