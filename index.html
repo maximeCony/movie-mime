@@ -20,9 +20,17 @@
       <div id="js-dragDropFileHandler" class="fileHandler">
         <h3>Drag and drop a movie here</h3>
       </div>
-      <video id="js-video" class="is-hidden" controls>
+      <video id="js-video" class="is-hidden">
         Your browser does not support HTML5 video.
       </video>
+      <!-- Video Controls -->
+      <div id="video-controls">
+        <button type="button" class="js-playPauseVideo">Play</button>
+        <input type="range" class="js-seekVideo" value="0">
+        <button type="button" class="js-muteVideo">Mute</button>
+        <input type="range" class="js-setVolumeVideo" min="0" max="1" step="0.1" value="1">
+        <button type="button" class="js-fullScreenVideo">Full-Screen</button>
+      </div>
       <h5 id="js-fileName" class="text-muted"></h5>
     </div>
 

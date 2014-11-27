@@ -41,11 +41,11 @@ io.on('connection', function(socket) {
   socket.on('video:play', function(params) {
     video.startedAt = params.timestamp;
     video.at = params.at;
-    socket.broadcast.emit('video:play', params.at);
+    socket.emit('video:play', params.at);
   });
   
   socket.on('video:pause', function() {
-    socket.broadcast.emit('video:pause');
+    socket.emit('video:pause');
   });
   
   socket.on('video:timeupdate', function(params) {
@@ -54,20 +54,20 @@ io.on('connection', function(socket) {
     }
   });
 
-  socket.on('video:ready', function(filename) {
-    socket.broadcast.emit('alert', {
-      type: 'info',
-      message: user.username + ' has lauched ' + filename,
-    });
-  });
+  // socket.on('video:ready', function(filename) {
+  //   socket.broadcast.emit('alert', {
+  //     type: 'info',
+  //     message: user.username + ' has lauched ' + filename,
+  //   });
+  // });
 
-  socket.on('set:username', function(username) {
-    user.username = username;
-    socket.broadcast.emit('set:username', {
-      userId: user.id,
-      username: user.username,
-    });
-  });
+  // socket.on('set:username', function(username) {
+  //   user.username = username;
+  //   socket.broadcast.emit('set:username', {
+  //     userId: user.id,
+  //     username: user.username,
+  //   });
+  // });
 
 });
 
