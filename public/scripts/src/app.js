@@ -46,7 +46,8 @@ $video
       at: $video[0].currentTime, 
       timestamp: Date.now(),
     };
-    $seekVideo.val((100 / video.duration) * video.currentTime);
+    var value = (100 / video.duration) * video.currentTime;
+    $seekVideo[0].value = value;
     socket.emit('video:timeupdate', params);
   });
 
@@ -83,26 +84,31 @@ $fullScreenVideo
     if (video.requestFullscreen) {
       video.requestFullscreen();
     } else if (video.mozRequestFullScreen) {
-      video.mozRequestFullScreen(); // Firefox
+      // Firefox
+      video.mozRequestFullScreen();
     } else if (video.webkitRequestFullscreen) {
-      video.webkitRequestFullscreen(); // Chrome and Safari
+      // Chrome and Safari
+      video.webkitRequestFullscreen();
     }
   });
 
 $seekVideo
   .on('change', function() {
+    console.log('$seekVideo', 'change');
     var at = video.duration * ($seekVideo.val() / 100);
+    console.log(at);
     video.currentTime = at;
   })
   .on('mousedown', function() {
+    video.pause();
+    socket.emit('video:pause');
+  })
+  .on('mouseup', function() {
     var params = {
       at: video.currentTime, 
       timestamp: Date.now(),
     };
     socket.emit('video:play', params);
-  })
-  .on('mouseup', function() {
-    video.play();
   });
 
 socket
@@ -111,7 +117,7 @@ socket
     video.play();
   })
   .on('video:pause', function() {
-    socket.emit('video:pause');
+    video.pause();
   })
   .on('video:updatetime', function(at) {
     updateCurrentTime(at);
