@@ -46,8 +46,13 @@ $video
       at: $video[0].currentTime, 
       timestamp: Date.now(),
     };
-    var value = (100 / video.duration) * video.currentTime;
-    $seekVideo[0].value = value;
+    var value = (video.currentTime * 100) / video.duration;
+    $seekVideo.val(value);
+    console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
+    console.log('value', value);
+    console.log('video.duration', video.duration);
+    console.log('video.currentTime', video.currentTime);
+    console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
     socket.emit('video:timeupdate', params);
   });
 
