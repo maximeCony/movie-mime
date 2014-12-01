@@ -42,18 +42,13 @@ $video
     $playPauseVideo.html('Play');
   })
   .on('timeupdate', function() {
-    var params = {
+    if (video.seeking) return;
+    var value = (10000 * video.currentTime) / video.duration;
+    $seekVideo.val(value);
+    socket.emit('video:timeupdate', {
       at: $video[0].currentTime, 
       timestamp: Date.now(),
-    };
-    var value = (video.currentTime * 100) / video.duration;
-    $seekVideo.val(value);
-    console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
-    console.log('value', value);
-    console.log('video.duration', video.duration);
-    console.log('video.currentTime', video.currentTime);
-    console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
-    socket.emit('video:timeupdate', params);
+    });
   });
 
 $playPauseVideo
@@ -61,11 +56,10 @@ $playPauseVideo
     if (video.paused !== true) {
       return socket.emit('video:pause');
     }
-    var params = {
+    socket.emit('video:play', {
       at: video.currentTime, 
       timestamp: Date.now(),
-    };
-    socket.emit('video:play', params);
+    });
   });
 
 $muteVideo
@@ -99,10 +93,11 @@ $fullScreenVideo
 
 $seekVideo
   .on('change', function() {
-    console.log('$seekVideo', 'change');
-    var at = video.duration * ($seekVideo.val() / 100);
-    console.log(at);
-    video.currentTime = at;
+    var at = ($seekVideo.val() * video.duration) / 10000;
+    socket.emit('video:seek', {
+      at: at, 
+      timestamp: Date.now(),
+    });
   })
   .on('mousedown', function() {
     video.pause();
@@ -118,7 +113,7 @@ $seekVideo
 
 socket
   .on('video:play', function(at) {
-    video.currentTime = at;
+    // updateCurrentTime(at);
     video.play();
   })
   .on('video:pause', function() {
