@@ -23,9 +23,6 @@ var requireUpdate = function(video, clientVideo) {
     max = Math.max(serverDifference, clientDifference),
     min = Math.min(serverDifference, clientDifference),
     difference = max - min;
-  console.log('####################################');
-  console.log(difference);
-  console.log('####################################');
   return difference > allowedDifference;
 };
 
@@ -57,7 +54,6 @@ io.on('connection', function(socket) {
 
   socket.on('video:timeupdate', function(params) {
     if (requireUpdate(video, params)) {
-      console.log('updatetime');
       user.socket.emit('video:updatetime', params.at);
     }
   });

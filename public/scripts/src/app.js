@@ -93,27 +93,21 @@ $fullScreenVideo
 
 $seekVideo
   .on('change', function() {
-    var at = ($seekVideo.val() * video.duration) / 10000;
     socket.emit('video:seek', {
-      at: at, 
+      at: ($seekVideo.val() * video.duration) / 10000, 
       timestamp: Date.now(),
     });
   })
   .on('mousedown', function() {
     video.pause();
-    socket.emit('video:pause');
   })
   .on('mouseup', function() {
-    var params = {
-      at: video.currentTime, 
-      timestamp: Date.now(),
-    };
-    socket.emit('video:play', params);
+    video.play();
   });
 
 socket
   .on('video:play', function(at) {
-    // updateCurrentTime(at);
+    updateCurrentTime(at);
     video.play();
   })
   .on('video:pause', function() {
