@@ -34,6 +34,16 @@ var createAlert = function(type, message) {
   // TODO!
 };
 
+var playPause = function() {
+  if (video.paused !== true) {
+    return socket.emit('video:pause');
+  }
+  socket.emit('video:play', {
+    at: video.currentTime, 
+    timestamp: Date.now(),
+  });
+};
+
 $video
   .on('play', function() {
     $playPauseVideo.html('Pause');
@@ -52,15 +62,7 @@ $video
   });
 
 $playPauseVideo
-  .on('click', function() {
-    if (video.paused !== true) {
-      return socket.emit('video:pause');
-    }
-    socket.emit('video:play', {
-      at: video.currentTime, 
-      timestamp: Date.now(),
-    });
-  });
+  .on('click', playPause);
 
 $muteVideo
   .on('click', function() {
@@ -123,6 +125,9 @@ socket
 // Drag and drop
 
 $(document)
+  .on('keyup', function(e) {
+    if (e.which !== 80) playPause();
+  })
   .on('dragenter', function(e) {
     e.stopPropagation();
     e.preventDefault();
