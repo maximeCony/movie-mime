@@ -29,6 +29,29 @@ var heartBeat = function() {
   }, 200);
 };
 
+// hide/show controls on full screen
+
+var hideAfter = 4,
+  inactivityTimer = 0;
+
+var showFullScreenControls = function() {
+  inactivityTimer = 0;
+  $videoControls.show();
+};
+
+var toogleFullScreenControls = function() {
+  inactivityTimer++;
+  if (inactivityTimer >= hideAfter) {
+    $videoControls.hide();
+  }
+};
+
+$(document)
+  .on('click', showFullScreenControls)
+  .on('mousemove', showFullScreenControls)
+  .on('keyup', showFullScreenControls);
+
+var toogleFullScreenControlsInterval;
 var handleFile = function(file) {
   $handler.hide();
   $videoContainer.fadeIn();
@@ -38,6 +61,10 @@ var handleFile = function(file) {
     .fadeIn();
   video.src = _URL.createObjectURL(file);
   heartBeat();
+  if (!toogleFullScreenControlsInterval) {
+    toogleFullScreenControlsInterval = window
+      .setInterval(toogleFullScreenControls, 1000);  
+  }
 };
 
 var updateCurrentTime = function(at) {
@@ -63,30 +90,6 @@ var playPause = function() {
   });
 };
 
-// hide/show controls on full screen
-
-var hideAfter = 4,
-  inactivityTimer = 0;
-
-var showFullScreenControls = function() {
-  inactivityTimer = 0;
-  $videoControls.show();
-};
-
-var toogleFullScreenControls = function() {
-  inactivityTimer++;
-  if (inactivityTimer >= hideAfter) {
-    $videoControls.hide();
-  }
-};
-
-$(document)
-  .on('click', showFullScreenControls)
-  .on('mousemove', showFullScreenControls)
-  .on('keyup', showFullScreenControls);
-
-var toogleFullScreenControlsInterval;
-
 // fullscreen
 
 var toogleFullScreen = function() {
@@ -104,8 +107,6 @@ var toogleFullScreen = function() {
       video
         .webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
     }
-    toogleFullScreenControlsInterval = window
-      .setInterval(toogleFullScreenControls, 1000);
   } else {
     if (document.exitFullscreen) {
       document.exitFullscreen();
@@ -116,7 +117,6 @@ var toogleFullScreen = function() {
     } else if (document.webkitExitFullscreen) {
       document.webkitExitFullscreen();
     }
-    clearInterval(toogleFullScreenControlsInterval);
   }
 };
 
