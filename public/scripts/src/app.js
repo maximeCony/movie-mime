@@ -5,6 +5,7 @@ var socket = io(),
   $videoContainer = $('#video-container'),
   $video = $('#js-video'),
   video = $video[0],
+  $videoCurrentTime = $('.js-videoCurrentTime'),
   $playPauseVideo = $('.js-playPauseVideo'),
   $muteVideo = $('.js-muteVideo'),
   $fullScreenVideo = $('.js-fullScreenVideo'),
@@ -104,6 +105,9 @@ $video
     heartBeat();  
   })
   .on('timeupdate', function() {
+    var date = new Date(null);
+    date.setSeconds(video.currentTime);
+    $videoCurrentTime.text(date.toISOString().substr(11, 8));
     if (video.seeking) return;
     var value = (10000 * video.currentTime) / video.duration;
     $seekVideo.val(value);
@@ -174,7 +178,7 @@ socket
 
 $(document)
   .on('keyup', function(e) {
-    if (e.which === 80) playPause();
+    if (e.which === 32) playPause();
   })
   .on('dragenter', function(e) {
     e.stopPropagation();

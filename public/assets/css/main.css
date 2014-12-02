@@ -58,13 +58,24 @@ video::-webkit-media-controls-enclosure {
 #video-controls {
   z-index: 2147483647;
   position: absolute;
-  bottom: 0;
-  left: 0;
-  padding: 20px;
+  bottom: 5px;
+  left: 15px;
+  padding: 15px;
+  padding-left: 0;
   width: 100%;
+  background: black;
+  opacity: 0.5;
+  color: white;
+}
+
+#video-controls div input {
+  height: 30px;
 }
 
 #video-controls div input {
   vertical-align: middle;
-  height: 30px;
+}
+
+#video-controls div button {
+  border-radius: 20px;
 }
