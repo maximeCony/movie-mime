@@ -15,6 +15,10 @@ body {
   display: none;
 }
 
+#video-container {
+  position: relative;
+}
+
 #js-video {
   margin: auto;
   width: 100%;
@@ -40,4 +44,27 @@ body {
 
 .grow:hover {
   transform: scale(1.5);
+}
+
+.animate-grow {
+  transform: scale(1.5);
+}
+
+/* hide full screen controls */
+video::-webkit-media-controls-enclosure {
+  display:none !important;
+}
+
+#video-controls {
+  z-index: 2147483647;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 20px;
+  width: 100%;
+}
+
+#video-controls div input {
+  vertical-align: middle;
+  height: 30px;
 }

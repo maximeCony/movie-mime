@@ -3,6 +3,7 @@
   <head>
     <title>Movie share</title>
     <link rel="stylesheet" href="/public/assets/css/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="/public/assets/css/animate.min.css">
     <link rel="stylesheet" href="/public/assets/css/main.css">
   </head>
   <body>
@@ -19,20 +20,37 @@
     <div class="app">
       <div id="js-dragDropFileHandler" class="fileHandler">
         <h3>
-          <!-- <span class="glyphicon glyphicon-film" aria-hidden="true"></span>  -->
           Drag and drop a movie here 
         </h3>
       </div>
-      <video id="js-video" class="is-hidden">
-        Your browser does not support HTML5 video.
-      </video>
-      <!-- Video Controls -->
-      <div id="video-controls">
-        <button type="button" class="js-playPauseVideo">Play</button>
-        <input type="range" class="js-seekVideo" min="0" max="10000" step="1" value="0">
-        <button type="button" class="js-muteVideo">Mute</button>
-        <input type="range" class="js-setVolumeVideo" min="0" max="1" step="0.1" value="1">
-        <button type="button" class="js-fullScreenVideo">Full-Screen</button>
+      <div id="video-container" class="is-hidden">
+        <video id="js-video">
+          Your browser does not support HTML5 video.
+        </video>
+        <!-- Video Controls -->
+        <div id="video-controls" class="row">
+          <div class="col-xs-1">
+            <button class="btn btn-default js-playPauseVideo">
+              <span class="glyphicon glyphicon-play"></span>
+            </button>
+          </div>
+          <div class="col-xs-8">
+            <input type="range" class="js-seekVideo" min="0" max="10000" step="1" value="0">
+          </div>
+          <div class="col-xs-1">
+            <input type="range" class="js-setVolumeVideo" min="0" max="1" step="0.1" value="1">
+          </div>
+          <div class="col-xs-1">
+            <button class="btn btn-default js-muteVideo">
+              <span class="glyphicon glyphicon-volume-off"></span>
+            </button>
+          </div>
+          <div class="col-xs-1">
+            <button class="btn btn-default js-fullScreenVideo">
+              <span class="glyphicon glyphicon-fullscreen"></span>
+            </button>
+          </div>
+        </div>
       </div>
       <h5 id="js-fileName" class="text-muted"></h5>
     </div>
