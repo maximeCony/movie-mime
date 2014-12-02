@@ -6,6 +6,7 @@ var socket = io(),
   $video = $('#js-video'),
   video = $video[0],
   $videoCurrentTime = $('.js-videoCurrentTime'),
+  $videoControls = $('#video-controls'),
   $playPauseVideo = $('.js-playPauseVideo'),
   $muteVideo = $('.js-muteVideo'),
   $fullScreenVideo = $('.js-fullScreenVideo'),
@@ -62,6 +63,32 @@ var playPause = function() {
   });
 };
 
+// hide/show controls on full screen
+
+var hideAfter = 4,
+  inactivityTimer = 0;
+
+var showFullScreenControls = function() {
+  inactivityTimer = 0;
+  $videoControls.show();
+};
+
+var toogleFullScreenControls = function() {
+  inactivityTimer++;
+  if (inactivityTimer >= hideAfter) {
+    $videoControls.hide();
+  }
+};
+
+$(document)
+  .on('click', showFullScreenControls)
+  .on('mousemove', showFullScreenControls)
+  .on('keyup', showFullScreenControls);
+
+var toogleFullScreenControlsInterval;
+
+// fullscreen
+
 var toogleFullScreen = function() {
   if (!document.fullscreenElement &&
       !document.mozFullScreenElement && 
@@ -77,6 +104,8 @@ var toogleFullScreen = function() {
       video
         .webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
     }
+    toogleFullScreenControlsInterval = window
+      .setInterval(toogleFullScreenControls, 1000);
   } else {
     if (document.exitFullscreen) {
       document.exitFullscreen();
@@ -87,6 +116,7 @@ var toogleFullScreen = function() {
     } else if (document.webkitExitFullscreen) {
       document.webkitExitFullscreen();
     }
+    clearInterval(toogleFullScreenControlsInterval);
   }
 };
 
