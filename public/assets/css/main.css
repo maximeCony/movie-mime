@@ -27,3 +27,21 @@ body {
   outline: none;
   text-align: right;
 }
+
+.heart {
+ /* cursor: grab;
+  cursor: -webkit-grab;*/
+  color: pink;
+}
+
+.grow {
+  transition: all .2s ease-in-out;
+}
+
+.grow:hover {
+  transform: scale(1.5);
+}
+
+.animate-grow {
+  transform: scale(1.5);
+}
