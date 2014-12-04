@@ -4,6 +4,7 @@ var express = require('express'),
   app = express(),
   http = require('http').Server(app),
   io = require('socket.io')(http),
+  browserify = require('browserify-middleware'),
   ntp = require('socket-ntp'),
   video = {
     users: {},
@@ -12,6 +13,7 @@ var express = require('express'),
   },
   allowedDifference = 0.7;
 
+app.use('/public/scripts/build/apps', browserify('./public/scripts/src/apps'));
 app.use('/public', express.static(__dirname + '/public'));
 
 app.get('/', function(req, res) {

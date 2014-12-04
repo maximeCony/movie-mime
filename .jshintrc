@@ -4,6 +4,14 @@
    * =================
    */
 
+  "predef": [
+    "Backbone",
+    "_",
+    "dust",
+    "APP_BASE_CONTEXT",
+    "APP"
+  ],
+
   // Define globals exposed by modern browsers.
   "browser": true,
 

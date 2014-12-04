@@ -6,44 +6,39 @@
     <link rel="stylesheet" href="/public/assets/css/main.css">
   </head>
   <body>
-   
-  <div class="container">
-    
-    <div class="header">
-      <input id="usernameInput" class="is-hidden" type="text" placeholder="What's your name?">
-      <h1 class="text-muted">M<span class="heart grow">❤</span>vie Share</h1>
-      <hr>
-      <div id="js-alerts"></div>
-    </div>
-
-    <div class="app">
-      <div id="js-dragDropFileHandler" class="fileHandler">
-        <h3>Drag and drop a movie here</h3>
+    <div class="container">
+      <div class="header">
+        <input id="usernameInput" class="is-hidden" type="text" placeholder="What's your name?">
+        <h1 class="text-muted">M<span class="heart grow">❤</span>vie Share</h1>
+        <hr>
+        <div id="js-alerts"></div>
       </div>
-      <video id="js-video" class="is-hidden" controls>
-        Your browser does not support HTML5 video.
-      </video>
-      <h5 id="js-fileName" class="text-muted"></h5>
-    </div>
-
-  </div> <!-- /container -->
-   
+      <div id="app"></div>
+    </div> <!-- /container -->
   </body>
 </html>
 
-<!-- Alert template -->
-<script type="text/template" id="alert-template">
-  <div class="alert alert-{type} alert-dismissible fade in" role="alert">
-    <button type="button" class="close" data-dismiss="alert">
-      <span aria-hidden="true">×</span>
-      <span class="sr-only">Close</span>
-    </button>
-    {message}
+<!-- user form template -->
+<script type="text/template" id="user-form-template">
+  <input id="username-input" type="text" placeholder="What's your name?"> 
+  <button id="js-saveUser" class="btn btn-default">OK</button>
+</script>
+
+<!-- movie template -->
+<script type="text/template" id="movie-template">
+  <div id="js-dragDropFileHandler" class="fileHandler">
+    <h3>Drag and drop a movie here</h3>
   </div>
+  <video id="js-video" class="is-hidden" controls>
+    Your browser does not support HTML5 video.
+  </video>
+  <h5 id="js-fileName" class="text-muted"></h5>
 </script>
 
 <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+<script src="/public/scripts/vendors/socket-ntp/ntp.js"></script>
 <script src="/public/scripts/vendors/jquery/jquery-2.1.1.js"></script>
 <script src="/public/scripts/vendors/bootstrap/bootstrap.js"></script>
-<script src="/public/scripts/vendors/socket-ntp/ntp.js"></script>
-<script src="/public/scripts/src/app.js"></script>
+<script src="/public/scripts/vendors/underscore/underscore.js"></script>
+<script src="/public/scripts/vendors/backbone/backbone.js"></script>
+<script src="/public/scripts/build/apps/app.js"></script>
