@@ -23,6 +23,9 @@ var requireUpdate = function(video, clientVideo) {
     max = Math.max(serverDifference, clientDifference),
     min = Math.min(serverDifference, clientDifference),
     difference = max - min;
+  if (difference > allowedDifference) {
+    console.log('difference', difference);
+  }
   return difference > allowedDifference;
 };
 

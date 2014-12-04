@@ -28,6 +28,14 @@ body {
   text-align: right;
 }
 
+h1 {
+  font-size: 1.7em;
+}
+
+h1:hover .grow {
+  transform: scale(1.5);
+}
+
 .heart {
  /* cursor: grab;
   cursor: -webkit-grab;*/
@@ -36,10 +44,6 @@ body {
 
 .grow {
   transition: all .2s ease-in-out;
-}
-
-.grow:hover {
-  transform: scale(1.5);
 }
 
 .animate-grow {
