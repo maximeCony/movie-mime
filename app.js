@@ -4,6 +4,7 @@ var express = require('express'),
   app = express(),
   http = require('http').Server(app),
   io = require('socket.io')(http),
+  ntp = require('socket-ntp'),
   video = {
     users: {},
     startedAt: null,
@@ -23,14 +24,12 @@ var requireUpdate = function(video, clientVideo) {
     max = Math.max(serverDifference, clientDifference),
     min = Math.min(serverDifference, clientDifference),
     difference = max - min;
-  if (difference > allowedDifference) {
-    console.log('difference', difference);
-  }
   return difference > allowedDifference;
 };
 
 io.on('connection', function(socket) {
-  
+
+  ntp.sync(socket);
   video.users[socket.id] = {
     socket: socket,
     username: null,

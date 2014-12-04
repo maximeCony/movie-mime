@@ -12,6 +12,8 @@ var socket = io(),
   emitPlay = true,
   emitPause = true;
 
+ntp.init(socket);
+
 var clearAnimateGrowClassTimeout;
 var heartBeat = function() {
   $heart.addClass('animate-grow');
