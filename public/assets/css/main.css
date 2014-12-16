@@ -49,3 +49,7 @@ h1:hover .grow {
 .animate-grow {
   transform: scale(1.5);
 }
+
+.room {
+  cursor: pointer;
+}

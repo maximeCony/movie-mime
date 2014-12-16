@@ -24,8 +24,21 @@
   <button id="js-saveUser" class="btn btn-default">OK</button>
 </script>
 
-<!-- movie template -->
-<script type="text/template" id="movie-template">
+<!-- rooms template -->
+<script type="text/template" id="rooms-template">
+  <button type="button" class="btn btn-primary btn-lg pull-right">Create Room</button>
+  <br>
+  <div id="js-rooms"></div>
+</script>
+
+<!-- room row template -->
+<script type="text/template" id="room-row-template">
+  <h3><%= room.name %></h3>
+  <hr>
+</script>
+
+<!-- room template -->
+<script type="text/template" id="room-template">
   <div id="js-dragDropFileHandler" class="fileHandler">
     <h3>Drag and drop a movie here</h3>
   </div>

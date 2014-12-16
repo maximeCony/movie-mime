@@ -8,6 +8,7 @@ $(function() {
     models: {},
     collections: {},
     views: {},
+    socket: io(),
   };
 
   APP.router = new AppRouter();
