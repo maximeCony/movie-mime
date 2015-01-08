@@ -14,13 +14,13 @@ var socket = io(),
 
 ntp.init(socket);
 
-var clearAnimateGrowClassTimeout;
+var animateGrowClassTimeout;
 var heartBeat = function() {
   $heart.addClass('animate-grow');
-  if (clearAnimateGrowClassTimeout) {
-    clearTimeout(clearAnimateGrowClassTimeout);
+  if (animateGrowClassTimeout) {
+    clearTimeout(animateGrowClassTimeout);
   }
-  clearAnimateGrowClassTimeout = setTimeout(function() {
+  animateGrowClassTimeout = setTimeout(function() {
     $heart.removeClass('animate-grow');
   }, 200);
 };
