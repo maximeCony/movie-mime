@@ -1,11 +1,8 @@
 {
-  "name": "movie-share",
+  "name": "movie-mime",
   "version": "0.0.0",
   "description": "",
   "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "Maxime Cony",
   "license": "ISC",
   "dependencies": {

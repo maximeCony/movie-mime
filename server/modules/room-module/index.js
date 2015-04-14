@@ -13,9 +13,8 @@ var getRooms = function(req, res, next) {
 };
 
 var createRoom = function(req, res, next) {
-  console.log(req.body);
-  var name = req.param('name'),
-    password = req.param('password'),
+  var name = req.body.name,
+    password = req.body.password,
     err;
   if (!name) {
     err = new Error('Missing param name');

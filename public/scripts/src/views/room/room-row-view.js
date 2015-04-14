@@ -20,7 +20,7 @@ module.exports = Backbone.View.extend({
   joinRoom: function() {
     var params = {
       roomId: this.model.id,
-      user: localStorage.getItem('movie-share-username') || 'unknown',
+      user: localStorage.getItem('movie-mime-username') || 'unknown',
     };
     APP.socket.emit('room:join', params);
   },

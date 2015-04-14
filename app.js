@@ -24,11 +24,12 @@ app.get('/', function(req, res) {
 app.use(roomModule);
 socketModule(io);
 
-mongoose.connect('mongodb://localhost/movie-share');
+mongoose.connect('mongodb://localhost/movie-mime');
 var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  http.listen(process.env.PORT, function() {
-    console.log('listening on port '+ process.env.PORT);
-  });
-});
+db
+  .once('open', function() {
+    http.listen(process.env.PORT, function() {
+      console.log('listening on port '+ process.env.PORT);
+    });
+  })
+  .on('error', console.error.bind(console, 'connection error:'));

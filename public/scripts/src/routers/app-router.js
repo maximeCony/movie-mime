@@ -16,7 +16,7 @@ module.exports = Backbone.Router.extend({
 
   start: function() {
     this.listenToSocket();
-    var username = localStorage.getItem('movie-share-username');
+    var username = localStorage.getItem('movie-mime-username');
     if (!username || username === 'undefined') {
       Backbone.history.start({
         silent: window.location.hash !== '#user',

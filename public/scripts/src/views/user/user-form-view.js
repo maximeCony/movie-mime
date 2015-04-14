@@ -17,7 +17,7 @@ module.exports = Backbone.View.extend({
 
   saveUser: function() {
     var username = this.$el.find('#username-input').val();
-    localStorage.setItem('movie-share-username', username);
+    localStorage.setItem('movie-mime-username', username);
     APP.router.navigate('rooms', { trigger: true });
   },
 
