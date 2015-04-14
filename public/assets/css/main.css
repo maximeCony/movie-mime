@@ -53,3 +53,16 @@ h1:hover .grow {
 .room {
   cursor: pointer;
 }
+
+/*.striped-mime {
+  background: linear-gradient(
+    to bottom,
+    black,
+    black 50%,
+    white 50%,
+    white
+  );
+  background-size: 100% 20px;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}*/

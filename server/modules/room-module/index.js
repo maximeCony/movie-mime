@@ -14,21 +14,21 @@ var getRooms = function(req, res, next) {
 
 var createRoom = function(req, res, next) {
   var name = req.body.name,
-    password = req.body.password,
+    // password = req.body.password,
     err;
   if (!name) {
     err = new Error('Missing param name');
     err.status = 400;
     return next(err);
   }
-  if (!password) {
-    err = new Error('Missing param password');
-    err.status = 400;
-    return next(err);
-  }
+  // if (!password) {
+  //   err = new Error('Missing param password');
+  //   err.status = 400;
+  //   return next(err);
+  // }
   var room = new Room({
     name: name,
-    password: password,
+    // password: password,
   });
   room.save(function(err) {
     if (err) return next(err);

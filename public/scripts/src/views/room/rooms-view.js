@@ -1,21 +1,23 @@
 'use strict';
 
-var RoomRowView = require('./room-row-view');
+var RoomRowView = require('./room-row-view'),
+  utils = require('../../lib/utils');
 
 module.exports = Backbone.View.extend({
 
-  el: '#app',
+  el: 'body',
 
   template: _.template($('#rooms-template').html()),
 
   events: {
     'click .js-createRoomModal': 'createRoomModal',
-    'submit #js-createRoomForm': 'createRoom',
+    'submit .js-createRoomForm': 'createRoom',
   },
 
   initialize: function() {
     this.listenTo(this.collection, 'reset', this.render);
     this.listenTo(this.collection, 'add', this.addOne);
+    this.$app = this.$el.find('#app');
   },
 
   addOne: function(model) {
@@ -24,8 +26,8 @@ module.exports = Backbone.View.extend({
   },
 
   render: function() {
-    this.$el.html(this.template());
-    this.$rows = this.$el.find('#js-rooms').html('');
+    this.$app.html(this.template());
+    this.$rows = this.$app.find('#js-rooms').html('');
     this.$createRoomModal = $('#js-createRoomModal');
     this.$createRoomForm = this.$createRoomModal.find('#createRoomForm');
     this.collection.forEach(this.addOne, this);
@@ -38,7 +40,17 @@ module.exports = Backbone.View.extend({
 
   createRoom: function(e) {
     e.preventDefault();
-    console.log(this.$createRoomForm);
+    var attributes = utils.serializeForm($(e.currentTarget)),
+      me = this;
+    this.collection.create(attributes, {
+      wait: true,
+      error: function () {
+        // TODO
+      },
+      success: function () {
+        me.$createRoomModal.modal('hide');
+      },
+    });
   },
 
 });

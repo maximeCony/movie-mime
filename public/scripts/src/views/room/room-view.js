@@ -1,6 +1,6 @@
 'use strict';
 
-var services = require('../../services'),
+var utils = require('../../lib/utils'),
   allowedDifference = 0.7;
 
 module.exports = Backbone.View.extend({
@@ -57,11 +57,11 @@ module.exports = Backbone.View.extend({
       .html(icon + file.name)
       .fadeIn();
     this.video.src = _URL.createObjectURL(file);
-    services.heartBeat();
+    utils.heartBeat();
   },
 
   play: function() {
-    services.heartBeat();
+    utils.heartBeat();
     if (!this.emitPlay) return this.emitPlay = true;
     var params = {
       at: this.video.currentTime, 
@@ -71,7 +71,7 @@ module.exports = Backbone.View.extend({
   },
 
   pause: function() {
-    services.heartBeat();
+    utils.heartBeat();
     if (!this.emitPause) return this.emitPause = true;
     APP.socket.emit('video:pause');
   },

@@ -15,4 +15,15 @@ module.exports = {
     }, 200);
   },
 
+  serializeForm: function($from) {
+    return _.object(
+      _.map($from.serializeArray(), function(object) {
+        return [
+          object.name, 
+          object.value === '' ? null : object.value,
+        ];
+      })
+    );
+  },
+
 };
