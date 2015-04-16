@@ -5,3 +5,4 @@ npm-debug.log
 .DS_Store
 nodemon.json
 Procfile.dev
+public/scripts/dist/
