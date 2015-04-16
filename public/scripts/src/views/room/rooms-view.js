@@ -1,13 +1,11 @@
 'use strict';
 
-var RoomRowView = require('./room-row-view'),
-  utils = require('../../lib/utils');
+var RoomRowView = require('./room-row-view');
+var utils = require('../../lib/utils');
 
 module.exports = Backbone.View.extend({
 
   el: 'body',
-
-  template: _.template($('#rooms-template').html()),
 
   events: {
     'click .js-createRoomModal': 'createRoomModal',
@@ -17,7 +15,8 @@ module.exports = Backbone.View.extend({
   initialize: function() {
     this.listenTo(this.collection, 'reset', this.render);
     this.listenTo(this.collection, 'add', this.addOne);
-    this.$app = this.$el.find('#app');
+    this.$rows = this.$el.find('.js-rooms');
+    this.$createRoomModal = $('#js-createRoomModal');
   },
 
   addOne: function(model) {
@@ -26,10 +25,7 @@ module.exports = Backbone.View.extend({
   },
 
   render: function() {
-    this.$app.html(this.template());
-    this.$rows = this.$app.find('#js-rooms').html('');
-    this.$createRoomModal = $('#js-createRoomModal');
-    this.$createRoomForm = this.$createRoomModal.find('#createRoomForm');
+    this.$rows.html('');
     this.collection.forEach(this.addOne, this);
     return this;
   },
@@ -45,7 +41,7 @@ module.exports = Backbone.View.extend({
     this.collection.create(attributes, {
       wait: true,
       error: function () {
-        // TODO
+        // TODO: alert
       },
       success: function () {
         me.$createRoomModal.modal('hide');

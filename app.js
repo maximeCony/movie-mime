@@ -4,7 +4,6 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var browserify = require('browserify-middleware');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var dustjs = require('adaro');
@@ -12,7 +11,6 @@ var socketModule = require('./server/modules/socket-module');
 var roomModule = require('./server/modules/room-module');
 var isProduction = process.env.NODE_ENV === 'production';
 
-app.use('/public/scripts/build/apps', browserify('./public/scripts/src/apps'));
 app.use('/public', express.static(__dirname + '/public'));
 
 // dust

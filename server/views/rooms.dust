@@ -1,13 +1,14 @@
 {>"layout"/}
 
 {<scripts}
-	<script src="/public/scripts/build/apps/rooms-app.js"></script>
+	<script src="/public/scripts/dist/templates/templates.js"></script>
+	<script src="/public/scripts/dist/apps/rooms-app.js"></script>
 {/scripts}
 
 {<content}
 	<button type="button" class="btn btn-primary btn-lg pull-right js-createRoomModal">Create Room</button>
 	<br>
-	<div id="js-rooms"></div>
+	<div class="js-rooms"></div>
 
 	{! create room modal !}
 	<div id="js-createRoomModal" class="modal fade">

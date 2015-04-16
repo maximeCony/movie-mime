@@ -60,7 +60,7 @@ h1.text-muted:hover .grow {
   transform: scale(1.5);
 }
 
-.room {
+.room-row {
   cursor: pointer;
 }
 

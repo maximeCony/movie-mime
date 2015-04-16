@@ -1,7 +1,6 @@
 'use strict';
 
 var io = require('socket.io'),
-  ntp = require('socket-ntp'),
   http = require('http'),
   video = {
     users: {},
@@ -23,7 +22,6 @@ module.exports = function(io) {
 
   io.on('connection', function(socket) {
 
-    ntp.sync(socket);
     video.users[socket.id] = {
       socket: socket,
       username: null,

@@ -1,28 +1,25 @@
 'use strict';
 
-module.exports = Backbone.View.extend({
+var DustView = require('../components/dust-view');
 
-  template: _.template($('#room-row-template').html()),
+module.exports = DustView.extend({
 
-  className: 'room',
+  templateName: 'room-row',
+
+  className: 'room-row',
 
   events: {
     'click': 'joinRoom',
   },
 
-  render: function() {
-    this.$el.html(this.template({
+  getDustContext: function() {
+    return {
       room: this.model.toJSON(),
-    }));
-    return this;
+    };
   },
 
   joinRoom: function() {
-    var params = {
-      roomId: this.model.id,
-      user: localStorage.getItem('movie-mime-username') || 'unknown',
-    };
-    APP.socket.emit('room:join', params);
+    window.location.href = '/rooms/' + this.model.id;
   },
 
 });
