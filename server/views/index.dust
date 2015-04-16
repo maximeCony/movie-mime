@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Movie Mime</title>
+		<link rel="stylesheet" href="/public/assets/css/bootstrap/bootstrap.css">
+		<link rel="stylesheet" href="/public/assets/css/main.css">
+	</head>
+	<body>
+		<div class="container">
+			<h1>
+				M<span class="heart grow">❤</span>vie <span class="striped-mime">Mime</span>
+			</h1>
+			<p>
+				A simple website design that facilitates the movie watching experience with friends and family afar. 
+				<br>
+				The app syncs the movie progression of both participants, allowing for real-time pausing, rewinding, and fast-forwarding to mirror the other’s.
+			</p>
+			<a href="/rooms" class="btn btn-primary btn-lgl">Start</a>
+		</div>
+	</body>
+</html>

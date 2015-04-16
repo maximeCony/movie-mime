@@ -1,9 +1,16 @@
 'use strict';
 
-var express = require('express'),
-  Room = require('../../model/room');
-
+var express = require('express');
+var Room = require('../../model/room');
 var router = express.Router();
+
+var renderRooms = function (req, res) {
+  res.render('rooms');
+};
+
+var renderRoom = function (req, res) {
+  res.render('room');
+};
 
 var getRooms = function(req, res, next) {
   Room.find(function(err, rooms) {
@@ -66,13 +73,22 @@ var updateRoom = function(req, res, next) {
   });
 };
 
-router.route('/rooms')
+router
+  .route('/rooms')
+  .get(renderRooms);
+
+router
+  .route('/room')
+  .get(renderRoom);
+
+router
+  .route('/api/rooms')
   .get(getRooms)
   .post(createRoom);
 
-router.route('/rooms/:room_id')
+router
+  .route('/api/rooms/:room_id')
   .delete(requireRoom, deleteRoom)
   .put(requireRoom, updateRoom);
 
 module.exports = router;
-

@@ -6,6 +6,6 @@ module.exports = Backbone.Collection.extend({
 
   model: RoomModel,
 
-  url: 'rooms',
+  url: 'api/rooms',
 
 });

@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+	<head>
+		<title>
+			{#title}
+				{title}
+			{:else}
+				Movie Mime
+			{/title}
+		</title>
+		<link rel="stylesheet" href="/public/assets/css/bootstrap/bootstrap.css">
+		<link rel="stylesheet" href="/public/assets/css/main.css">
+		{+styles/}
+	</head>
+	<body>
+		<div class="container">
+			<div class="header">
+				<input id="usernameInput" class="is-hidden" type="text" placeholder="What's your name?">
+				<h1 class="text-muted">
+					<a href="/" class="hidden-link">
+						M<span class="heart grow">❤</span>vie <span class="striped-mime">Mime</span>
+					</a>
+				</h1>
+				<hr>
+				<div id="js-alerts"></div>
+			</div>
+			{+content/}
+		</div>
+	</body>
+	<script src="/public/scripts/vendors/jquery/jquery-2.1.1.js"></script>
+	<script src="/public/scripts/vendors/bootstrap/bootstrap.js"></script>
+	{+scripts/}
+</html>

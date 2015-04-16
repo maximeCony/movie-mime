@@ -1,32 +1,40 @@
 'use strict';
 
-var express = require('express'),
-  app = express(),
-  http = require('http').Server(app),
-  io = require('socket.io')(http),
-  browserify = require('browserify-middleware'),
-  bodyParser = require('body-parser'),
-  mongoose = require('mongoose'),
-  socketModule = require('./server/modules/socket-module'),
-  roomModule = require('./server/modules/room-module');
+var express = require('express');
+var app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+var browserify = require('browserify-middleware');
+var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var dustjs = require('adaro');
+var socketModule = require('./server/modules/socket-module');
+var roomModule = require('./server/modules/room-module');
+var isProduction = process.env.NODE_ENV === 'production';
 
 app.use('/public/scripts/build/apps', browserify('./public/scripts/src/apps'));
 app.use('/public', express.static(__dirname + '/public'));
+
+// dust
+app.engine('dust', dustjs.dust({
+  cache: isProduction,
+}));
+app.set('view engine', 'dust');
+app.set('views', __dirname + '/server/views');
 
 // parse body
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+// routing
 app.get('/', function(req, res) {
-  res.sendfile('./server/views/index.html');
+  res.render('index');
 });
-
 app.use(roomModule);
 socketModule(io);
 
 mongoose.connect('mongodb://localhost/movie-mime');
-var db = mongoose.connection;
-db
+mongoose.connection
   .once('open', function() {
     http.listen(process.env.PORT, function() {
       console.log('listening on port '+ process.env.PORT);

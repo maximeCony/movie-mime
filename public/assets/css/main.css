@@ -28,12 +28,22 @@ body {
   text-align: right;
 }
 
-h1 {
+h1.text-muted {
   font-size: 1.7em;
 }
 
-h1:hover .grow {
+h1.text-muted:hover .grow {
   transform: scale(1.5);
+}
+
+.hidden-link {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+.hidden-link:hover {
+  color: inherit;
+  text-decoration: inherit;
 }
 
 .heart {
