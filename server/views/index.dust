@@ -6,16 +6,16 @@
 		<link rel="stylesheet" href="/public/assets/css/main.css">
 	</head>
 	<body>
-		<div class="container">
-			<h1>
-				M<span class="heart grow">❤</span>vie <span class="striped-mime">Mime</span>
-			</h1>
-			<p>
-				A simple website design that facilitates the movie watching experience with friends and family afar. 
-				<br>
-				The app syncs the movie progression of both participants, allowing for real-time pausing, rewinding, and fast-forwarding to mirror the other’s.
-			</p>
-			<a class="btn btn-primary btn-lgl js-createRoom">Create a new room</a>
+		<div class="main-header">
+			<div class="main-header-content">
+				<h1 class="main-header-title">
+					<span>M</span>
+					<span class="heart grow">❤</span>
+					<span>vie Mime</span>
+				</h1>
+				<p class="main-header-text">Synchronized movie watching</p>
+				<a class="btn btn-primary btn-lgl main-header-btn js-createRoom">Create a Room</a>
+			</div>
 		</div>
 	</body>
 	<script src="/public/scripts/dist/apps/indexApp.js"></script>

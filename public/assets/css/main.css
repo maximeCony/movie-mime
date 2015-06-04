@@ -1,4 +1,6 @@
-body {
+html, body {
+  height: 100%;
+  width: 100%;
   color: #777;
 }
 
@@ -60,19 +62,54 @@ h1.text-muted:hover .grow {
   transform: scale(1.5);
 }
 
+.heart:hover {
+  transform: scale(1.5);
+}
+
 .room-row {
   cursor: pointer;
 }
 
-/*.striped-mime {
-  background: linear-gradient(
-    to bottom,
-    black,
-    black 50%,
-    white 50%,
-    white
-  );
-  background-size: 100% 20px;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}*/
+.main-header {
+  background: rgba(0, 0, 0, 0) linear-gradient(to bottom, #f4f4f4, #f4f4f4 50%, #ffffff 50%, #ffffff) repeat scroll 0 0 / 100% 20px;
+  color: #777;
+  height: 100%;
+  min-height: 450px;
+  text-align: center;
+  width: 100%;
+}
+
+.main-header-content {
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transform-style: preserve-3d;
+}
+
+.main-header-text {
+  font-size: 41px;
+  margin-bottom: 60px;
+}
+
+.main-header-btn {
+  background-color: #777;
+  border: 1px solid #777;
+  color: white;
+  font-size: 22px;
+  padding: 15px 20px 16px;
+}
+
+.main-header-btn:hover {
+  color: pink;
+  background-color: #585858;
+  border: 1px solid #585858;
+}
+
+.main-header-title {
+  font-size: 60px;
+}
+
+.main-header-title .heart {
+  font-size: 80px;
+}

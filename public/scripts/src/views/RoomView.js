@@ -10,10 +10,14 @@ module.exports = function (roomId, socket) {
     initialize: function() {
       this.emitPlay = true;
       this.emitPause = true;
-      console.log('join', roomId)
       socket.emit('room:join', { roomId: roomId });
       this.$handler = $('#js-dragDropFileHandler');
       this.$fileName = $('#js-fileName');
+      $('#js-shareableLink')
+        .val('http://localhost:3000/rooms/' + roomId)
+        .focus(function () { this.select(); })
+        .mouseup(function () { return false; })
+        .focus();
       // TODO:
       // this.$usernameInput = $('#usernameInput').focus();
       this.initEvents();
