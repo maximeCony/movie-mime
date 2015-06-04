@@ -5,7 +5,6 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
 var dustjs = require('adaro');
 var socketModule = require('./server/modules/socket-module');
 var roomModule = require('./server/modules/room-module');
@@ -25,17 +24,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // routing
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
   res.render('index');
 });
 app.use(roomModule);
 socketModule(io);
 
-mongoose.connect('mongodb://localhost/movie-mime');
-mongoose.connection
-  .once('open', function() {
-    http.listen(process.env.PORT, function() {
-      console.log('listening on port '+ process.env.PORT);
-    });
-  })
-  .on('error', console.error.bind(console, 'connection error:'));
+http.listen(process.env.PORT, function () {
+  console.log('listening on port '+ process.env.PORT);
+});

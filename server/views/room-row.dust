@@ -1,4 +1,0 @@
-{#room}
-	<h3>{name}</h3>
-	<hr>
-{/room}

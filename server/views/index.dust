@@ -15,7 +15,8 @@
 				<br>
 				The app syncs the movie progression of both participants, allowing for real-time pausing, rewinding, and fast-forwarding to mirror the other’s.
 			</p>
-			<a href="/rooms" class="btn btn-primary btn-lgl">Start</a>
+			<a class="btn btn-primary btn-lgl js-createRoom">Create a new room</a>
 		</div>
 	</body>
+	<script src="/public/scripts/dist/apps/indexApp.js"></script>
 </html>
