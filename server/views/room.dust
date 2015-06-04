@@ -10,9 +10,18 @@
 
 {<content}
 	<div id="js-dragDropFileHandler" class="fileHandler">
-		<h2>Drag and drop a movie here</h2>
+		<ul>
+		    <li>
+		    	<h2>1. Send this link to the other person</h2>
+				<br>
+				<input type="text" id="js-shareableLink">
+		    </li>
+		    <li>
+		    	<h2>2. Drag and drop a movie here</h2>
+		    </li>
+		</ul>
 		<h3>
-			Link to your private Room <input type="text" id="js-shareableLink">
+			
 		</h3>
 	</div>
 	<video id="js-video" class="is-hidden" controls>

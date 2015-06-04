@@ -58,12 +58,12 @@ h1.text-muted:hover .grow {
   transition: all .2s ease-in-out;
 }
 
-.animate-grow {
-  transform: scale(1.5);
+.grow:hover {
+  transform: scale(1.1);
 }
 
-.heart:hover {
-  transform: scale(1.5);
+.animate-grow {
+  transform: scale(1.1);
 }
 
 .room-row {
@@ -71,7 +71,9 @@ h1.text-muted:hover .grow {
 }
 
 .main-header {
-  background: rgba(0, 0, 0, 0) linear-gradient(to bottom, #f4f4f4, #f4f4f4 50%, #ffffff 50%, #ffffff) repeat scroll 0 0 / 100% 20px;
+  background: rgba(0, 0, 0, 0) linear-gradient(
+    to bottom, #e3e3e3, #e3e3e3 50%, #ffffff 50%, #ffffff
+  ) repeat scroll 0 0 / 100% 20px;
   color: #777;
   height: 100%;
   min-height: 450px;
@@ -79,20 +81,30 @@ h1.text-muted:hover .grow {
   width: 100%;
 }
 
+/*.white-halo {
+  text-shadow: 0 0 10px white, 0 0 20px white, 0 0 30px white, 
+    0 0 40px white, 0 0 70px white, 0 0 80px white, 0 0 100px white, 0 0 150px white;
+}*/
+
 .main-header-content {
   left: 50%;
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
   transform-style: preserve-3d;
+  background-image: radial-gradient(
+    30px at 50% 42% , rgba(255, 255, 255, 0.7) 30px, rgba(0, 0, 0, 0) 260px
+  )
 }
 
 .main-header-text {
   font-size: 41px;
   margin-bottom: 60px;
+  text-shadow: 2px 2px 3px white;
 }
 
 .main-header-btn {
+  box-shadow: 2px 2px 3px white;
   background-color: #777;
   border: 1px solid #777;
   color: white;
@@ -101,7 +113,9 @@ h1.text-muted:hover .grow {
 }
 
 .main-header-btn:hover {
-  color: pink;
+  /*color: pink;*/
+  /*background-color: pink;*/
+  /*border: 1px solid pink;*/
   background-color: #585858;
   border: 1px solid #585858;
 }
@@ -109,7 +123,10 @@ h1.text-muted:hover .grow {
 .main-header-title {
   font-size: 60px;
 }
+.main-header-title span {
+  text-shadow: 2px 2px 3px white;
+}
 
 .main-header-title .heart {
-  font-size: 80px;
+  font-size: 60px;
 }
