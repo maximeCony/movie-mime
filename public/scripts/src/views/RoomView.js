@@ -13,8 +13,14 @@ module.exports = function (roomId, socket) {
       socket.emit('room:join', { roomId: roomId });
       this.$handler = $('#js-dragDropFileHandler');
       this.$fileName = $('#js-fileName');
+      var parser = document.createElement('a');
+      parser.href = window.location.href;
       $('#js-shareableLink')
-        .val('http://localhost:3000/rooms/' + roomId)
+        .val(
+          parser.protocol + '//' + parser.hostname +
+          (parser.port ? ':' + parser.port : '') +
+          '/rooms/' + roomId
+        )
         .focus(function () { this.select(); })
         .mouseup(function () { return false; })
         .focus();
