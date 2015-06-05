@@ -80,7 +80,7 @@ h1.text-muted:hover .grow {
     to bottom, #ffe9f3, #ffe9f3 50%, #ffffff 50%, #ffffff
   ) r*/epeat scroll 0 0 / 100% 20px;
   background: rgba(0, 0, 0, 0) linear-gradient(
-    to bottom, #fcffb6, #fcffb6 50%, #ffffff 50%, #ffffff
+    to bottom, #e9f3ff, #e9f3ff 50%, #ffffff 50%, #ffffff
   ) repeat scroll 0 0 / 100% 20px;
   color: #777;
   height: 100%;
