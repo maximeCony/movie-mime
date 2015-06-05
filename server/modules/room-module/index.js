@@ -3,8 +3,7 @@
 var express = require('express');
 var router = express.Router();
 var shortid = require('shortid');
-var redis = require('redis');
-var client = redis.createClient();
+var redisClient = require('../../lib/redisClient');
 var day = 24 * 60 * 60;
 
 var createRoom = function(req, res, next) {
@@ -14,9 +13,9 @@ var createRoom = function(req, res, next) {
     // TODO: add password
     created_at: new Date(),
   };
-  client.set(key, JSON.stringify(room), function (err) {
+  redisClient.set(key, JSON.stringify(room), function (err) {
     if (err) return next(err);
-    client.expire(key, day, function (err) {
+    redisClient.expire(key, day, function (err) {
       if (err) return next(err);
       res.json({ id: id });
     });

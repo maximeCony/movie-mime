@@ -7,6 +7,7 @@ var io = require('socket.io')(http);
 var bodyParser = require('body-parser');
 var dustjs = require('adaro');
 var socketModule = require('./server/modules/socket-module');
+var defaultModule = require('./server/modules/default-module');
 var roomModule = require('./server/modules/room-module');
 var isProduction = process.env.NODE_ENV === 'production';
 
@@ -24,9 +25,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // routing
-app.get('/', function (req, res) {
-  res.render('index');
-});
+app.use(defaultModule);
 app.use(roomModule);
 socketModule(io);
 
