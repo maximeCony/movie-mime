@@ -54,16 +54,21 @@ h1.text-muted:hover .grow {
   color: pink;
 }
 
+.layout-heart {
+  font-size: 16px;
+  margin-left: -1px;
+  margin-right: 1px;
+}
 .grow {
   transition: all .2s ease-in-out;
 }
 
 .grow:hover {
-  transform: scale(1.1);
+  transform: scale(1.5);
 }
 
 .animate-grow {
-  transform: scale(1.1);
+  transform: scale(1.5);
 }
 
 .room-row {
@@ -72,7 +77,7 @@ h1.text-muted:hover .grow {
 
 .main-header {
   background: rgba(0, 0, 0, 0) linear-gradient(
-    to bottom, #e3e3e3, #e3e3e3 50%, #ffffff 50%, #ffffff
+    to bottom, #ffe9f3, #ffe9f3 50%, #ffffff 50%, #ffffff
   ) repeat scroll 0 0 / 100% 20px;
   color: #777;
   height: 100%;
@@ -81,11 +86,6 @@ h1.text-muted:hover .grow {
   width: 100%;
 }
 
-/*.white-halo {
-  text-shadow: 0 0 10px white, 0 0 20px white, 0 0 30px white, 
-    0 0 40px white, 0 0 70px white, 0 0 80px white, 0 0 100px white, 0 0 150px white;
-}*/
-
 .main-header-content {
   left: 50%;
   position: absolute;
@@ -93,18 +93,18 @@ h1.text-muted:hover .grow {
   transform: translate(-50%, -50%);
   transform-style: preserve-3d;
   background-image: radial-gradient(
-    30px at 50% 42% , rgba(255, 255, 255, 0.7) 30px, rgba(0, 0, 0, 0) 260px
-  )
+    30px at 50% 30% , rgba(255, 255, 255, 0.5) 30px, rgba(0, 0, 0, 0) 260px
+  );
 }
 
 .main-header-text {
   font-size: 41px;
   margin-bottom: 60px;
-  text-shadow: 2px 2px 3px white;
+  /*text-shadow: 1px 0 1px black;*/
 }
 
 .main-header-btn {
-  box-shadow: 2px 2px 3px white;
+  /*box-shadow: 1px 2px 2px #282828;*/
   background-color: #777;
   border: 1px solid #777;
   color: white;
@@ -124,9 +124,34 @@ h1.text-muted:hover .grow {
   font-size: 60px;
 }
 .main-header-title span {
-  text-shadow: 2px 2px 3px white;
+  /*text-shadow: 1px 0 1px black;*/
 }
 
 .main-header-title .heart {
-  font-size: 60px;
+  font-size: 37px;
+  margin-left: -4px;
+  margin-right: 1px;
+}
+
+.to-do-list {
+  list-style: none;
+  margin: auto;
+  text-align: left;
+  width: 680px;
+}
+
+#js-shareableLink {
+  border: none;
+  font-size: 20px;
+  width: 100%;
+}
+
+.main-reasons {
+  max-width: 1000px;
+  margin: auto;
+  padding-top: 50px;
+}
+
+.main-reasons-bottom-row {
+  padding-top: 140px;
 }

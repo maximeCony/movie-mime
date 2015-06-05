@@ -10,11 +10,33 @@
 			<div class="main-header-content">
 				<h1 class="main-header-title">
 					<span>M</span>
-					<span class="heart grow">❤</span>
+					<span class="glyphicon glyphicon-heart heart grow"></span>
 					<span>vie Mime</span>
 				</h1>
 				<p class="main-header-text">Synchronized movie watching</p>
 				<a class="btn btn-primary btn-lgl main-header-btn js-createRoom">Create a Room</a>
+			</div>
+		</div>
+		<div class="main-reasons">
+			<div>
+				<div class="col-lg-6">
+					<h3>Subheading</h3>
+					<p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+				</div>
+				<div class="col-lg-6">
+					<h3>Subheading</h3>
+					<p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+				</div>
+			</div>
+			<div class="main-reasons-bottom-row">
+				<div class="col-lg-6">
+					<h3>Subheading</h3>
+					<p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+				</div>
+				<div class="col-lg-6">
+					<h3>Subheading</h3>
+					<p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+				</div>
 			</div>
 		</div>
 	</body>
