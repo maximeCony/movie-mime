@@ -108,9 +108,9 @@ h1.text-muted:hover .grow {
 
 .main-header-btn {
   /*box-shadow: 1px 2px 2px #282828;*/
-  background-color: #777;
+  background-color: white;
   border: 1px solid #777;
-  color: white;
+  color: #777;
   font-size: 22px;
   padding: 15px 20px 16px;
 }
