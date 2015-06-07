@@ -32,7 +32,13 @@ module.exports = function () {
       peers
         .on('video:play', this.receivedPlay.bind(this))
         .on('video:pause', this.receivedPause.bind(this))
-        .on('video:timeupdate', this.receivedTimeUpdate.bind(this));
+        .on('video:timeupdate', this.receivedTimeUpdate.bind(this))
+        .on('call:local', function (stream) {
+          $('#my-video').prop('src', URL.createObjectURL(stream));
+        })
+        .on('call:remote', function (stream) {
+          $('#their-video').prop('src', URL.createObjectURL(stream));
+        });
       $(document)
         .on('dragenter', this.dragenter.bind(this))
         .on('dragover', this.dragover.bind(this))
@@ -43,6 +49,7 @@ module.exports = function () {
         .on('pause', this.pause.bind(this))
         .on('seeked', this.timeupdate.bind(this));
       this.video = this.$video[0];
+      $('.js-call').click(peers.call);
     },
 
     updateCurrentTime: function(at) {

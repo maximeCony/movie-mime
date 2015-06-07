@@ -28,5 +28,8 @@
 	<video id="js-video" class="is-hidden" controls>
 		Your browser does not support HTML5 video.
 	</video>
-	<h5 id="js-fileName" class="text-muted"></h5>
+	<br>
+	<button class="btn btn-primary js-call">Send video</button>
+	<video id="my-video" autoplay style="width:400px"></video>
+	<video id="their-video" autoplay style="width:800px"></video>
 {/content}
