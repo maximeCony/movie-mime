@@ -30,7 +30,7 @@
 				</video>
     		</div>
     		<div id="cams-container" class="col-md-2 is-hidden">
-    			<video id="my-video" autoplay style="width:100%"></video>
+    			<video id="my-video" autoplay muted style="width:100%"></video>
     			<video id="their-video" autoplay style="width:100%"></video>
     			<button class="btn btn-danger js-hangup is-hidden">
     				<span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span> 
