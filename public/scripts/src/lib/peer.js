@@ -6,7 +6,7 @@ parser.href = window.location.href;
 module.exports = new Peer({
   debug: 3,
   host: '/',
-  port: parser.port || 80,
+  port: parser.port || null,
   path: '/peerjs',
   secure: parser.protocol === 'https:',
   config: { 

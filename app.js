@@ -25,7 +25,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // routing
-app.use('/peerjs', expressPeerServer(http, { proxied: true }));
+app.use('/peerjs', expressPeerServer(http));
 app.use(webModule);
 socketModule(io);
 
