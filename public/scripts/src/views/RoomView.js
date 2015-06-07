@@ -2,15 +2,15 @@
 
 var utils = require('../lib/utils');
 var ALLOWED_DIFFERENCE = 0.7;
+var peers = require('../lib/peers');
 
-module.exports = function (roomId, socket) {
+module.exports = function () {
 
   return {
 
     initialize: function() {
       this.emitPlay = true;
       this.emitPause = true;
-      socket.emit('room:join', { roomId: roomId });
       this.$handler = $('#js-dragDropFileHandler');
       this.$fileName = $('#js-fileName');
       var parser = document.createElement('a');
@@ -19,22 +19,20 @@ module.exports = function (roomId, socket) {
         .val(
           parser.protocol + '//' + parser.hostname +
           (parser.port ? ':' + parser.port : '') +
-          '/rooms/' + roomId
+          '/rooms/' + window.ROOM_ID
         )
         .focus(function () { this.select(); })
         .mouseup(function () { return false; })
         .focus();
-      // TODO:
-      // this.$usernameInput = $('#usernameInput').focus();
       this.initEvents();
       return this;
     },
 
     initEvents: function () {
-      socket
+      peers
         .on('video:play', this.receivedPlay.bind(this))
         .on('video:pause', this.receivedPause.bind(this))
-        .on('video:updatetime', this.receivedUpdateTime.bind(this));
+        .on('video:timeupdate', this.receivedTimeUpdate.bind(this));
       $(document)
         .on('dragenter', this.dragenter.bind(this))
         .on('dragover', this.dragover.bind(this))
@@ -43,7 +41,7 @@ module.exports = function (roomId, socket) {
       this.$video = $('#js-video')
         .on('play', this.play.bind(this))
         .on('pause', this.pause.bind(this))
-        .on('timeupdate', this.timeupdate.bind(this));
+        .on('seeked', this.timeupdate.bind(this));
       this.video = this.$video[0];
     },
 
@@ -74,10 +72,9 @@ module.exports = function (roomId, socket) {
         return;
       }
       var params = {
-        at: this.video.currentTime, 
-        timestamp: Date.now(),
+        at: this.video.currentTime,
       };
-      socket.emit('video:play', params);
+      peers.emit('video:play', params);
     },
 
     pause: function() {
@@ -86,19 +83,18 @@ module.exports = function (roomId, socket) {
         this.emitPause = true;
         return;
       }
-      socket.emit('video:pause');
+      peers.emit('video:pause');
     },
 
     timeupdate: function() {
       var params = {
-        at: this.video.currentTime, 
-        timestamp: Date.now(),
+        at: this.video.currentTime,
       };
-      socket.emit('video:timeupdate', params);
+      peers.emit('video:timeupdate', params);
     },
 
-    receivedPlay: function(at) {
-      this.updateCurrentTime(at);
+    receivedPlay: function(params) {
+      this.updateCurrentTime(params.at);
       // prevent to re-emit play
       this.emitPlay = false;
       this.video.play();
@@ -110,8 +106,17 @@ module.exports = function (roomId, socket) {
       this.video.pause();
     },
 
-    receivedUpdateTime: function(at) {
-      this.updateCurrentTime(at);
+    isTimeUpdateRequired: function(at) {
+      var max = Math.max(at, this.video.currentTime);
+      var min = Math.min(at, this.video.currentTime);
+      var difference = max - min;
+      return difference > ALLOWED_DIFFERENCE;
+    },
+
+    receivedTimeUpdate: function(params) {
+      if (this.isTimeUpdateRequired(params.at)) {
+        this.updateCurrentTime(params.at);
+      }
     },
 
     dragenter: function(e) {

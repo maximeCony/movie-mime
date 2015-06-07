@@ -4,10 +4,11 @@ window.$ = window.jQuery = require('jquery');
 
 $(function() {
 
-  var signaling = require('../lib/signaling');
-  signaling.initialize();
+  window._ = require('lodash');
+  window.Backbone = require('backbone');
+  window.Backbone.$ = $;
 
-  // var RoomView = require('../views/RoomView');
-  // var roomView = new RoomView();
-  // roomView.initialize();
+  var RoomView = require('../views/RoomView');
+  var roomView = new RoomView();
+  roomView.initialize();
 });
