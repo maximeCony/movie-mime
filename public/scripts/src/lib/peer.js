@@ -8,7 +8,7 @@ module.exports = new Peer({
   host: '/',
   port: parser.port || 80,
   path: '/peerjs',
-  secure: parser.protocol === 'https',
+  secure: parser.protocol === 'https:',
   config: { 
     iceServers: [
       { url: 'stun:stun.l.google.com:19302' },
