@@ -32,7 +32,7 @@ module.exports = function(io) {
       delete video.users[socket.id];
     });
 
-    socket.on('room:join', function(params) {
+    socket.on('moviemime:room:join', function(params) {
       user.roomId = params.roomId;
       socket.join(params.roomId);
       user.socket.emit('room:joined', {
@@ -40,21 +40,27 @@ module.exports = function(io) {
       });
     });
 
-    socket.on('room:leave', function(params) {
-      socket.leave(params.roomId);
+    socket.on('moviemime:signaling:hello', function(params) {
+      // send user's peer id to users in the room
+      socket.to(user.roomId)
+        .broadcast.emit('moviemime:signaling:hello', params);
     });
+
+    // socket.on('moviemime:room:leave', function(params) {
+    //   socket.leave(params.roomId);
+    // });
     
-    socket.on('video:play', function(params) {
+    socket.on('moviemime:video:play', function(params) {
       video.startedAt = params.timestamp;
       video.at = params.at;
       socket.to(user.roomId).broadcast.emit('video:play', params.at);
     });
     
-    socket.on('video:pause', function() {
+    socket.on('moviemime:video:pause', function() {
       socket.to(user.roomId).broadcast.emit('video:pause');
     });
     
-    socket.on('video:timeupdate', function(params) {
+    socket.on('moviemime:video:timeupdate', function(params) {
       if (requireUpdate(video, params)) {
         user.socket.emit('video:updatetime', params.at);
       }
