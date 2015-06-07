@@ -3,6 +3,7 @@
 module.exports = new Peer({ 
   key: 'f8ks1iddocvoyldi',
   debug: 3,
+  secure: true,
   config: { 
     iceServers: [
       { url: 'stun:stun.l.google.com:19302' },
