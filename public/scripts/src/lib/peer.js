@@ -3,6 +3,7 @@
 module.exports = new Peer({ 
   key: 'f8ks1iddocvoyldi',
   debug: 3,
+  host: 'movie-mime-peerjs-server.herokuapp.com',
   secure: true,
   config: { 
     iceServers: [
