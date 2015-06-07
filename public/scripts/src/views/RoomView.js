@@ -8,11 +8,18 @@ module.exports = function () {
 
   return {
 
+    eventsInitialized: false,
+
     initialize: function() {
       this.emitPlay = true;
       this.emitPause = true;
       this.$handler = $('#js-dragDropFileHandler');
       this.$fileName = $('#js-fileName');
+      this.$backdrop = $('.backdrop');
+      this.$callBtn = $('.js-call');
+      this.$hangupBtn = $('.js-hangup');
+      this.$movieContainer = $('#movie-container');
+      this.$camsContainer = $('#cams-container');
       var parser = document.createElement('a');
       parser.href = window.location.href;
       $('#js-shareableLink')
@@ -24,20 +31,40 @@ module.exports = function () {
         .focus(function () { this.select(); })
         .mouseup(function () { return false; })
         .focus();
-      this.initEvents();
+      peers.on('connexion:connected', this.newUserConnected.bind(this));
       return this;
     },
 
+    newUserConnected: function () {
+      if (!this.eventsInitialized) this.initEvents();
+      $('#step-2').removeClass('is-hidden');
+      $('#step-1').addClass('is-hidden');
+    },
+
     initEvents: function () {
+      var me = this;
+      this.eventsInitialized = true;
       peers
         .on('video:play', this.receivedPlay.bind(this))
         .on('video:pause', this.receivedPause.bind(this))
         .on('video:timeupdate', this.receivedTimeUpdate.bind(this))
         .on('call:local', function (stream) {
+          me.$backdrop.addClass('is-hidden');
+          me.$callBtn
+            .removeClass('btn-success')
+            .addClass('btn-info')
+            .text('Calling...');
           $('#my-video').prop('src', URL.createObjectURL(stream));
         })
         .on('call:remote', function (stream) {
+          me.$callBtn.addClass('is-hidden');
+          me.$hangupBtn.removeClass('is-hidden');
+          me.$movieContainer.removeClass('col-md-12').addClass('col-md-10');
+          me.$camsContainer.removeClass('is-hidden');
           $('#their-video').prop('src', URL.createObjectURL(stream));
+        })
+        .on('confirmCamAccess', function () {
+          me.$backdrop.removeClass('is-hidden');
         });
       $(document)
         .on('dragenter', this.dragenter.bind(this))
@@ -49,7 +76,8 @@ module.exports = function () {
         .on('pause', this.pause.bind(this))
         .on('seeked', this.timeupdate.bind(this));
       this.video = this.$video[0];
-      $('.js-call').click(peers.call);
+      this.$callBtn.click(peers.call);
+      this.$hangupBtn.click(peers.hangup);
     },
 
     updateCurrentTime: function(at) {
@@ -61,6 +89,7 @@ module.exports = function () {
     },
 
     handleFile: function(file) {
+      $('.js-call').removeClass('is-hidden');
       this.$handler.hide();
       this.$video.fadeIn();
       var icon = '<span class="glyphicon glyphicon-film"></span> ',

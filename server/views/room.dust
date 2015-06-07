@@ -12,24 +12,37 @@
 {<content}
 	<div id="js-dragDropFileHandler" class="fileHandler">
 		<ul class="to-do-list">
-		    <li>
-		    	<h2>1. You need to both have the same video file</h2>
-		    </li>
-		    <li>
-		    	<h2>2. Send this link to the other person</h2>
+		    <li id="step-1">
+		    	<h2>Send this link to the other person</h2>
 				<br>
 				<input type="text" id="js-shareableLink" readonly>
 		    </li>
-		    <li>
-		    	<h2>3. Drag and drop the video file on this page</h2>
+		    <li id="step-2" class="is-hidden">
+		    	<h2>Drag and drop the video file on this page</h2>
 		    </li>
 		</ul>
 	</div>
-	<video id="js-video" class="is-hidden" controls>
-		Your browser does not support HTML5 video.
-	</video>
-	<br>
-	<button class="btn btn-primary js-call">Send video</button>
-	<video id="my-video" autoplay style="width:400px"></video>
-	<video id="their-video" autoplay style="width:800px"></video>
+	<div class="container-fluid" style="text-align: center;">
+    	<div class="row video-container">
+    		<div id="movie-container" class="col-md-12">
+    			<video id="js-video" class="is-hidden" controls>
+					Your browser does not support HTML5 video.
+				</video>
+    		</div>
+    		<div id="cams-container" class="col-md-2 is-hidden">
+    			<video id="my-video" autoplay style="width:100%"></video>
+    			<video id="their-video" autoplay style="width:100%"></video>
+    			<button class="btn btn-danger js-hangup is-hidden">
+    				<span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span> 
+    				Call
+    			</button>
+    		</div>
+    		<div class="col-md-12">
+    			<button class="btn btn-success js-call is-hidden">
+    				<span class="glyphicon glyphicon-earphone" aria-hidden="true"></span> 
+    				Call
+    			</button>
+    		</div>
+    	</div>
+    </div>
 {/content}

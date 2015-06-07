@@ -26,12 +26,13 @@ var peers = module.exports = _.extend({
   },
 
   call: function () {
-    var options = { video: true, audio: false };
+    peers.trigger('confirmCamAccess');
+    var options = { video: true, audio: true };
     navigator.getUserMedia(options, function (stream) {
       peers.trigger('call:local', stream);
       peers.connexions.forEach(function (connexion) {
-        // FIXME: use one connexion
-        // see: https://github.com/peers/peerjs/issues/287
+        // FIXME: use one connexion https://github.com/peers/peerjs/pull/132
+        // also: https://github.com/peers/peerjs/issues/287
         // connexion.peerConnection.addStream(stream);
         var call = peer.call(connexion.peer, stream);
         call.on('stream', function (remoteStream) {
@@ -39,7 +40,15 @@ var peers = module.exports = _.extend({
         });
         calls.push(call);
       });
-    }, console.error);
+    }, function (err) {
+      console.log(err);
+    });
+  },
+
+  hangup: function () {
+    peers.calls.forEach(function (call) {
+      call.close();
+    });
   },
 
 }, Backbone.Events);
@@ -51,6 +60,7 @@ var peerInitialized = function () {
 };
 
 var connectedToPeer = function (connexion) {
+  peers.trigger('connexion:connected');
   peers.connexions.push(connexion);
   connexion.on('data', function (data) {
     // trigger the connexion event to the peers object
@@ -78,7 +88,8 @@ peer.on('connection', connectedToPeer);
 
 // on call
 peer.on('call', function (call) {
-  var options = { video: true, audio: false };
+  peers.trigger('confirmCamAccess');
+  var options = { video: true, audio: true };
   navigator.getUserMedia(options, function (stream) {
     peers.trigger('call:local', stream);
     calls.push(call);
