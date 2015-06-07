@@ -1,10 +1,14 @@
 'use strict';
 
-module.exports = new Peer({ 
-  key: 'f8ks1iddocvoyldi',
+var parser = document.createElement('a');
+parser.href = window.location.href;
+
+module.exports = new Peer({
   debug: 3,
-  host: 'movie-mime-peerjs-server.herokuapp.com',
-  secure: true,
+  host: '/',
+  port: parser.port || 80,
+  path: '/peerjs',
+  secure: parser.protocol === 'https',
   config: { 
     iceServers: [
       { url: 'stun:stun.l.google.com:19302' },

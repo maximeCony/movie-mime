@@ -9,6 +9,7 @@ var dustjs = require('adaro');
 var socketModule = require('./server/modules/socket-module');
 var webModule = require('./server/modules/web-module');
 var isProduction = process.env.NODE_ENV === 'production';
+var expressPeerServer = require('peer').ExpressPeerServer;
 
 app.use('/public', express.static(__dirname + '/public'));
 
@@ -24,6 +25,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // routing
+app.use('/peerjs', expressPeerServer(http));
 app.use(webModule);
 socketModule(io);
 
