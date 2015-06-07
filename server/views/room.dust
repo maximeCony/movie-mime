@@ -5,7 +5,7 @@
 	<script type="text/javascript">
 		var ROOM_ID = '{roomId}';
 	</script>
-	<script src="//cdn.peerjs.com/0.3/peer.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/peerjs/0.3.14/peer.js"></script>
 	<script src="/public/scripts/dist/apps/roomApp.js"></script>
 {/scripts}
 
