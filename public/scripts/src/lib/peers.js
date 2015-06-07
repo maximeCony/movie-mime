@@ -30,7 +30,8 @@ var peers = module.exports = _.extend({
     navigator.getUserMedia(options, function (stream) {
       peers.trigger('call:local', stream);
       peers.connexions.forEach(function (connexion) {
-        // console.log(connexion)
+        // FIXME: use one connexion
+        // see: https://github.com/peers/peerjs/issues/287
         // connexion.peerConnection.addStream(stream);
         var call = peer.call(connexion.peer, stream);
         call.on('stream', function (remoteStream) {
