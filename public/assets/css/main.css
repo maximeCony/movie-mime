@@ -171,6 +171,20 @@ h1.text-muted:hover .grow {
   background-color: #000;
 }
 
-#cams-container {
+.cams-container {
   padding: 0;
+}
+
+.cam-video {
+  width:100%
+}
+
+.full-screen-video {
+  z-index: 2147483647;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 200px;
+  /* used by interact.js */
+  box-sizing: border-box;
 }

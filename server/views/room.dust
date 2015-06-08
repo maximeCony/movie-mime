@@ -13,7 +13,7 @@
 	<div id="js-dragDropFileHandler" class="fileHandler">
 		<ul class="to-do-list">
 		    <li id="step-1">
-		    	<h2>Send this link to the other person</h2>
+		    	<h2>Send this link to the other person and wait for him to connect</h2>
 				<br>
 				<input type="text" id="js-shareableLink" readonly>
 		    </li>
@@ -29,9 +29,9 @@
 					Your browser does not support HTML5 video.
 				</video>
     		</div>
-    		<div id="cams-container" class="col-md-2 is-hidden">
-    			<video id="my-video" autoplay muted style="width:100%"></video>
-    			<video id="their-video" autoplay style="width:100%"></video>
+    		<div class="col-md-2 cams-container is-hidden">
+    			<video id="my-video" autoplay muted class="cam-video"></video>
+    			<video id="their-video" autoplay class="cam-video"></video>
     			<button class="btn btn-danger js-hangup is-hidden">
     				<span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span> 
     				Call

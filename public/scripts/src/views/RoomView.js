@@ -3,6 +3,7 @@
 var utils = require('../lib/utils');
 var ALLOWED_DIFFERENCE = 0.7;
 var peers = require('../lib/peers');
+var interact = require('interact.js');
 
 module.exports = function () {
 
@@ -19,7 +20,8 @@ module.exports = function () {
       this.$callBtn = $('.js-call');
       this.$hangupBtn = $('.js-hangup');
       this.$movieContainer = $('#movie-container');
-      this.$camsContainer = $('#cams-container');
+      this.$camsContainer = $('.cams-container');
+      this.$theirVideo = $('#their-video');
       var parser = document.createElement('a');
       parser.href = window.location.href;
       $('#js-shareableLink')
@@ -74,10 +76,67 @@ module.exports = function () {
       this.$video = $('#js-video')
         .on('play', this.play.bind(this))
         .on('pause', this.pause.bind(this))
-        .on('seeked', this.timeupdate.bind(this));
+        .on('seeked', this.timeupdate.bind(this))
+        .on(
+          'webkitfullscreenchange mozfullscreenchange fullscreenchange', 
+          this.toogleFullScreen.bind(this)
+        );
       this.video = this.$video[0];
       this.$callBtn.click(peers.call);
       this.$hangupBtn.click(peers.hangup);
+    },
+
+    toogleFullScreen: function () {
+      var isFullScreen = (
+        document.fullScreen || 
+        document.mozFullScreen || 
+        document.webkitIsFullScreen
+      );
+      if (isFullScreen) {
+        this.$theirVideo.addClass('full-screen-video');
+        interact('.full-screen-video')
+          .draggable({ 
+            inertia: true,
+            onmove: this.dragMoveListener,
+          })
+          .resizable({
+            edges: { left: true, right: true, bottom: false, top: false },
+          })
+          .on('resizemove', this.resizeMove);
+      } else {
+        this.$theirVideo.removeClass('full-screen-video');
+      }
+    },
+
+    resizeMove: function (e) {
+      var target = e.target;
+      var x = (parseFloat(target.getAttribute('data-x')) || 0);
+      var y = (parseFloat(target.getAttribute('data-y')) || 0);
+      // update the element's style
+      target.style.width  = e.rect.width + 'px';
+      // target.style.height = e.rect.height + 'px';
+      // translate when resizing from top or left edges
+      x += e.deltaRect.left;
+      target.style.webkitTransform = 
+        target.style.transform =
+        'translate(' + x + 'px,' + y + 'px)';
+      target.setAttribute('data-x', x);
+      target.setAttribute('data-y', y);
+      target.textContent = e.rect.width + '×' + e.rect.height;
+    },
+
+    dragMoveListener: function (e) {
+      var target = e.target;
+      // keep the dragged position in the data-x/data-y attributes
+      var x = (parseFloat(target.getAttribute('data-x')) || 0) + e.dx;
+      var y = (parseFloat(target.getAttribute('data-y')) || 0) + e.dy;
+      // translate the element
+      target.style.webkitTransform =
+      target.style.transform =
+        'translate(' + x + 'px, ' + y + 'px)';
+      // update the posiion attributes
+      target.setAttribute('data-x', x);
+      target.setAttribute('data-y', y);
     },
 
     updateCurrentTime: function(at) {
