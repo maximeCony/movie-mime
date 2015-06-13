@@ -27,7 +27,12 @@ var peers = module.exports = _.extend({
 
   call: function () {
     peers.trigger('confirmCamAccess');
-    var options = { video: true, audio: true };
+    var options = {
+      audio: true,
+      video: {
+        mandatory: { maxHeight: 150 },
+      },
+    };
     navigator.getUserMedia(options, function (stream) {
       peers.trigger('call:local', stream);
       peers.connexions.forEach(function (connexion) {
@@ -89,7 +94,12 @@ peer.on('connection', connectedToPeer);
 // on call
 peer.on('call', function (call) {
   peers.trigger('confirmCamAccess');
-  var options = { video: true, audio: true };
+  var options = {
+    audio: true,
+    video: {
+      mandatory: { maxHeight: 150 },
+    },
+  };
   navigator.getUserMedia(options, function (stream) {
     peers.trigger('call:local', stream);
     calls.push(call);

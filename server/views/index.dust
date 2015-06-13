@@ -14,7 +14,7 @@
 					<span>vie Mime</span>
 				</h1>
 				<p class="main-header-text">Synchronized movie watching</p>
-				<a class="btn btn-primary btn-lgl main-header-btn js-createRoom">Create a Room</a>
+				<a class="btn btn-primary btn-lgl main-header-btn js-createRoom">Get Started</a>
 			</div>
 		</div>
 		<div class="main-reasons">
