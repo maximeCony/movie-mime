@@ -26,7 +26,7 @@ var peers = module.exports = _.extend({
   },
 
   call: function () {
-    peers.trigger('confirmCamAccess');
+    peers.trigger('moviemime:camera:granted');
     var options = {
       audio: true,
       video: {
@@ -34,14 +34,14 @@ var peers = module.exports = _.extend({
       },
     };
     navigator.getUserMedia(options, function (stream) {
-      peers.trigger('call:local', stream);
+      peers.trigger('moviemime:call:local', stream);
       peers.connexions.forEach(function (connexion) {
         // FIXME: use one connexion https://github.com/peers/peerjs/pull/132
         // also: https://github.com/peers/peerjs/issues/287
         // connexion.peerConnection.addStream(stream);
         var call = peer.call(connexion.peer, stream);
         call.on('stream', function (remoteStream) {
-          peers.trigger('call:remote', remoteStream);
+          peers.trigger('moviemime:call:remote', remoteStream);
         });
         calls.push(call);
       });
@@ -72,7 +72,7 @@ var connectedToPeer = function (connexion) {
     peers.trigger(data.eventName, data.params);
   });
   connexion.on('stream', function (remoteStream) {
-    peers.trigger('call:remote', remoteStream);
+    peers.trigger('moviemime:call:remote', remoteStream);
   });
 };
 
@@ -93,7 +93,7 @@ peer.on('connection', connectedToPeer);
 
 // on call
 peer.on('call', function (call) {
-  peers.trigger('confirmCamAccess');
+  peers.trigger('moviemime:camera:granted');
   var options = {
     audio: true,
     video: {
@@ -101,11 +101,11 @@ peer.on('call', function (call) {
     },
   };
   navigator.getUserMedia(options, function (stream) {
-    peers.trigger('call:local', stream);
+    peers.trigger('moviemime:call:local', stream);
     calls.push(call);
     call.answer(stream);
     call.on('stream', function (remoteStream) {
-      peers.trigger('call:remote', remoteStream);
+      peers.trigger('moviemime:call:remote', remoteStream);
     });
   }, console.error);
 });

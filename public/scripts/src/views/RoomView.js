@@ -4,6 +4,12 @@ var utils = require('../lib/utils');
 var ALLOWED_DIFFERENCE = 0.7;
 var peers = require('../lib/peers');
 var interact = require('interact.js');
+var room = require('../lib/room');
+var fullscreenchange = [
+  'webkitfullscreenchange',
+  'mozfullscreenchange',
+  'fullscreenchange',
+].join(' ');
 
 module.exports = function () {
 
@@ -43,47 +49,51 @@ module.exports = function () {
       $('#step-1').addClass('is-hidden');
     },
 
+    calling: function (stream) {
+      this.$backdrop.addClass('is-hidden');
+      this.$callBtn
+        .removeClass('btn-success')
+        .addClass('btn-info')
+        .text('Calling...');
+      $('#my-video').prop('src', URL.createObjectURL(stream));
+    },
+
+    callReceived: function (stream) {
+      this.$callBtn.addClass('is-hidden');
+      this.$hangupBtn.removeClass('is-hidden');
+      this.$movieContainer.removeClass('col-md-12').addClass('col-md-10');
+      this.$camsContainer.removeClass('is-hidden');
+      $('#their-video').prop('src', URL.createObjectURL(stream));
+    },
+
+    cameraGranted: function () {
+      this.$backdrop.removeClass('is-hidden');
+    },
+
     initEvents: function () {
-      var me = this;
       this.eventsInitialized = true;
-      peers
-        .on('video:play', this.receivedPlay.bind(this))
-        .on('video:pause', this.receivedPause.bind(this))
-        .on('video:timeupdate', this.receivedTimeUpdate.bind(this))
-        .on('call:local', function (stream) {
-          me.$backdrop.addClass('is-hidden');
-          me.$callBtn
-            .removeClass('btn-success')
-            .addClass('btn-info')
-            .text('Calling...');
-          $('#my-video').prop('src', URL.createObjectURL(stream));
-        })
-        .on('call:remote', function (stream) {
-          me.$callBtn.addClass('is-hidden');
-          me.$hangupBtn.removeClass('is-hidden');
-          me.$movieContainer.removeClass('col-md-12').addClass('col-md-10');
-          me.$camsContainer.removeClass('is-hidden');
-          $('#their-video').prop('src', URL.createObjectURL(stream));
-        })
-        .on('confirmCamAccess', function () {
-          me.$backdrop.removeClass('is-hidden');
-        });
+      this.$video = $('#js-video');
+      this.video = this.$video[0];
+      room.socket
+        .on('moviemime:video:play', this.receivedPlay.bind(this))
+        .on('moviemime:video:pause', this.receivedPause.bind(this))
+        .on('moviemime:video:timeupdate', this.receivedTimeUpdate.bind(this));
       $(document)
         .on('dragenter', this.dragenter.bind(this))
         .on('dragover', this.dragover.bind(this))
         .on('dragleave', this.dragleave.bind(this))
         .on('drop', this.drop.bind(this));
-      this.$video = $('#js-video')
+      this.$video
         .on('play', this.play.bind(this))
         .on('pause', this.pause.bind(this))
         .on('seeked', this.timeupdate.bind(this))
-        .on(
-          'webkitfullscreenchange mozfullscreenchange fullscreenchange', 
-          this.toogleFullScreen.bind(this)
-        );
-      this.video = this.$video[0];
-      this.$callBtn.click(peers.call);
-      this.$hangupBtn.click(peers.hangup);
+        .on(fullscreenchange, this.toogleFullScreen.bind(this));
+      peers
+        .on('moviemime:call:local', this.calling.bind(this))
+        .on('moviemime:call:remote', this.callReceived.bind(this))
+        .on('moviemime:camera:granted', this.cameraGranted.bind(this));
+      this.$callBtn.on('click', peers.call);
+      this.$hangupBtn.on('click', peers.hangup);
     },
 
     toogleFullScreen: function () {
@@ -169,7 +179,7 @@ module.exports = function () {
       var params = {
         at: this.video.currentTime,
       };
-      peers.emit('video:play', params);
+      room.socket.emit('moviemime:video:play', params);
     },
 
     pause: function() {
@@ -178,14 +188,14 @@ module.exports = function () {
         this.emitPause = true;
         return;
       }
-      peers.emit('video:pause');
+      room.socket.emit('moviemime:video:pause');
     },
 
     timeupdate: function() {
       var params = {
         at: this.video.currentTime,
       };
-      peers.emit('video:timeupdate', params);
+      room.socket.emit('moviemime:video:timeupdate', params);
     },
 
     receivedPlay: function(params) {
