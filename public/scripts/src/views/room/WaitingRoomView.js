@@ -32,6 +32,7 @@ module.exports = DustView.extend({
   userAdded: function () {
     if (APP.collections.users.length > 1) {
       APP.views.fileHandlerView.render();
+      this.stopListening(APP.collections.users, 'add');
     }
   },
 
