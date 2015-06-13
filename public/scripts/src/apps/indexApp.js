@@ -17,7 +17,7 @@ $(function() {
       var win = window.open(url, '_blank');
       return win.focus();
     }
-    window.location.href = url;  
+    window.location.href = url;
   });
 
 });

@@ -5,6 +5,9 @@ var browserify = require('browserify');
 var transform = require('vinyl-transform');
 var source = require('vinyl-source-stream');
 var gutil = require('gulp-util');
+var compile = require('gulp-dust');
+var concat = require('gulp-concat');
+var insert = require('gulp-insert');
 var WATCH_SCRIPTS = process.env.WATCH_SCRIPTS === 'true' ? true : false;
 var watchify = require('watchify');
 
@@ -46,7 +49,19 @@ gulp.task('browserify', function () {
     .on('error', gutil.log.bind(gutil, 'browserify Error'));
 });
 
-gulp.task('default', [
-    'browserify',
-  ]
-);
+gulp.task('dust', function() {
+  return gulp
+    .src('./server/views/**/*.dust')
+    .pipe(compile())
+    .pipe(concat('templates.js'))
+    .pipe(insert.prepend('window.LOAD_DUST_TEMPATES = function() {'))
+    .pipe(insert.append('};'))
+    .pipe(gulp.dest('./public/scripts/dist/templates'))
+    .on('error', gutil.log.bind(gutil, 'dust error'));
+});
+
+gulp.task('watch', function() {
+  gulp.watch('./server/views/**/*.dust', ['dust']);
+});
+
+gulp.task('default', ['browserify', 'dust']);

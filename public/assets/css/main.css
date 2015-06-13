@@ -17,7 +17,7 @@ html, body {
   display: none;
 }
 
-#js-video {
+.js-video {
   margin: auto;
   width: 100%;
 }

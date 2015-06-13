@@ -1,111 +1,91 @@
 'use strict';
 
-var peer = require('./peer');
 var room = require('./room');
-var calls = [];
-
 navigator.getUserMedia = (
   navigator.getUserMedia || 
   navigator.webkitGetUserMedia || 
   navigator.mozGetUserMedia
 );
 
-var peers = module.exports = _.extend({
-  
-  connexions: [],
-  
-  calls: calls,
+module.exports = function () {
 
-  emit: function (eventName, params) {
-    peers.connexions.forEach(function (connexion) {
-      connexion.send({
-        eventName: eventName,
-        params: params,
-      });
-    });
-  },
-
-  call: function () {
-    peers.trigger('moviemime:camera:granted');
-    var options = {
-      audio: true,
-      video: {
-        mandatory: { maxHeight: 150 },
-      },
-    };
-    navigator.getUserMedia(options, function (stream) {
-      peers.trigger('moviemime:call:local', stream);
-      peers.connexions.forEach(function (connexion) {
-        // FIXME: use one connexion https://github.com/peers/peerjs/pull/132
-        // also: https://github.com/peers/peerjs/issues/287
-        // connexion.peerConnection.addStream(stream);
-        var call = peer.call(connexion.peer, stream);
-        call.on('stream', function (remoteStream) {
-          peers.trigger('moviemime:call:remote', remoteStream);
-        });
-        calls.push(call);
-      });
-    }, function (err) {
-      console.log(err);
-    });
-  },
-
-  hangup: function () {
-    peers.calls.forEach(function (call) {
-      call.close();
-    });
-  },
-
-}, Backbone.Events);
-
-var peerInitialized = function () {
-  room.socket.emit('moviemime:signaling:hello', {
-    peerId: peer.id,
-  }); 
-};
-
-var connectedToPeer = function (connexion) {
-  peers.trigger('connexion:connected');
-  peers.connexions.push(connexion);
-  connexion.on('data', function (data) {
-    // trigger the connexion event to the peers object
-    peers.trigger(data.eventName, data.params);
-  });
-  connexion.on('stream', function (remoteStream) {
-    peers.trigger('moviemime:call:remote', remoteStream);
-  });
-};
-
-var connectToPeer = function (params) {
-  var connexion = peer.connect(params.peerId);
-  connexion
-    .on('open', function () {
-      connectedToPeer(connexion);
-    });
-};
-
-/*
-* Simple Mesh signaling
-*/
-peer.on('open', peerInitialized);
-room.socket.on('moviemime:signaling:hello', connectToPeer);
-peer.on('connection', connectedToPeer);
-
-// on call
-peer.on('call', function (call) {
-  peers.trigger('moviemime:camera:granted');
-  var options = {
+  var parser = document.createElement('a');
+  parser.href = window.location.href;
+  var peerOptions = {
+    debug: 3,
+    host: '/',
+    port: parser.port || '',
+    path: '/peerjs',
+    secure: parser.protocol === 'https:',
+    config: { 
+      iceServers: [
+        { url: 'stun:stun.l.google.com:19302' },
+        { url: 'stun:stun1.l.google.com:19302' },
+        { 
+          url: 'turn:numb.viagenie.ca', 
+          username: 'maxime.cony@gmail.com',
+          credential: 'Vy2UzSJoLq',
+        },
+      ], 
+    },
+  };
+  var mediaStreamConstaints = {
     audio: true,
     video: {
       mandatory: { maxHeight: 150 },
     },
   };
-  navigator.getUserMedia(options, function (stream) {
-    peers.trigger('moviemime:call:local', stream);
-    calls.push(call);
-    call.answer(stream);
-    call.on('stream', function (remoteStream) {
-      peers.trigger('moviemime:call:remote', remoteStream);
-    });
-  }, console.error);
-});
+
+  return _.extend({
+
+    _peer: undefined,
+
+    _call: undefined,
+
+    initEvents: function () {
+      room.socket.on('moviemime:ring', this.ringReceived.bind(this));
+    },
+
+    ring: function () {
+      var me = this;
+      this.trigger('moviemime:camera:required:ring');
+      navigator.getUserMedia(mediaStreamConstaints, function (stream) {
+        me.trigger('moviemime:camera:granted:ring', stream);
+        me.localMediaStream = stream;
+        me.peer = new window.Peer(peerOptions);
+        me.peer
+          .on('open', function (peerId) {
+            room.socket.emit('moviemime:ring', {
+              peerId: peerId,
+            });
+          })
+          .on('call', function (call) {
+            call.answer(me.localMediaStream);
+            me._call = call;
+          });
+      }, this.trigger.bind(this, 'moviemime:ring:camera:denied'));
+    },
+
+    ringReceived: function (params) {
+      var me = this;
+      this.peer = new window.Peer(peerOptions);
+      this.peer.on('open', function () {
+        me.trigger('moviemime:camera:required:answer');
+        navigator.getUserMedia(mediaStreamConstaints, function (stream) {
+          me.trigger('moviemime:camera:granted:answer', stream);
+          me.localMediaStream = stream;
+          me._call = me.peer.call(params.peerId, stream);
+          me._call.on('stream', function (remoteStream) {
+            me.trigger('moviemime:camera:received', remoteStream);
+          });
+        });
+      });
+    },
+
+    hangup: function () {
+      this._call.close();
+    },
+
+  }, Backbone.Events);
+
+};

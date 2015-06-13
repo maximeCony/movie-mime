@@ -1,0 +1,16 @@
+{>"layout"/}
+
+{<scripts}
+	<script src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript">
+		var ROOM_ID = '{roomId}';
+	</script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/peerjs/0.3.14/peer.js"></script>
+	<script src="/public/scripts/dist/templates/templates.js"></script>
+	<script src="/public/scripts/dist/apps/roomApp.js"></script>
+{/scripts}
+
+{<content}
+	<section id="app"></section>
+	<section class="js-users"></section>
+{/content}

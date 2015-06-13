@@ -1,0 +1,6 @@
+{#user}
+  	<button class="btn btn-success js-call">
+		<span class="glyphicon glyphicon-earphone" aria-hidden="true"></span> 
+		Call {name} 
+	</button>
+{/user}

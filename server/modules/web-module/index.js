@@ -8,7 +8,7 @@ var renderIndex = function (req, res) {
 };
 
 var renderRoom = function (req, res) {
-  res.render('room', {
+  res.render('room/index', {
     roomId: req.params.room_id,
   });
 };

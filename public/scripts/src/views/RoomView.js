@@ -2,7 +2,8 @@
 
 var utils = require('../lib/utils');
 var ALLOWED_DIFFERENCE = 0.7;
-var peers = require('../lib/peers');
+var Peers = require('../lib/Peers');
+var peers = new Peers();
 var interact = require('interact.js');
 var room = require('../lib/room');
 var fullscreenchange = [
@@ -49,7 +50,7 @@ module.exports = function () {
       $('#step-1').addClass('is-hidden');
     },
 
-    calling: function (stream) {
+    connecting: function (stream) {
       this.$backdrop.addClass('is-hidden');
       this.$callBtn
         .removeClass('btn-success')
@@ -66,7 +67,7 @@ module.exports = function () {
       $('#their-video').prop('src', URL.createObjectURL(stream));
     },
 
-    cameraGranted: function () {
+    cameraRequired: function () {
       this.$backdrop.removeClass('is-hidden');
     },
 
@@ -89,9 +90,9 @@ module.exports = function () {
         .on('seeked', this.timeupdate.bind(this))
         .on(fullscreenchange, this.toogleFullScreen.bind(this));
       peers
-        .on('moviemime:call:local', this.calling.bind(this))
+        .on('moviemime:camera:granted', this.connecting.bind(this))
         .on('moviemime:call:remote', this.callReceived.bind(this))
-        .on('moviemime:camera:granted', this.cameraGranted.bind(this));
+        .on('moviemime:camera:required', this.cameraRequired.bind(this));
       this.$callBtn.on('click', peers.call);
       this.$hangupBtn.on('click', peers.hangup);
     },
