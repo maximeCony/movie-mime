@@ -14,9 +14,11 @@ module.exports = function (io) {
       attributes: null,
     };
 
+    var room;
+
     socket.on('disconnect', function () {
-      if (rooms[user.roomId] && rooms[user.roomId][user.socket.id]) {
-        delete rooms[user.roomId][user.socket.id];
+      if (room && room[user.socket.id]) {
+        delete room[user.socket.id];
         socket.to(user.roomId)
           .broadcast.emit('moviemime:room:deleteUser', user.socket.id);
       }
@@ -27,13 +29,18 @@ module.exports = function (io) {
       user.attributes = params.userAttributes;
       user.attributes.id = user.socket.id;
       socket.join(user.roomId);
-      if (!rooms[user.roomId]) rooms[user.roomId] = {};
-      rooms[user.roomId][user.socket.id] = user;
-      user.socket.emit('moviemime:room:joined', {
-        users: _.map(rooms[user.roomId], function (user) {
-          return user.attributes;
-        })
+      if (!rooms[user.roomId]) {
+        rooms[user.roomId] = {};
+      }
+      room = rooms[user.roomId];
+      room[user.socket.id] = user;
+      var users = [];
+      _.forEach(room, function (u) {
+        if (u.attributes.id !== user.socket.id) {
+          users.push(u.attributes);
+        }
       });
+      user.socket.emit('moviemime:room:joined', { users: users });
       socket.to(user.roomId)
         .broadcast.emit('moviemime:room:newUser', user.attributes);
     });
@@ -45,8 +52,10 @@ module.exports = function (io) {
     });
 
     socket.on('moviemime:ring', function (params) {
-      socket.to(user.roomId)
-        .broadcast.emit('moviemime:ring', params);
+      room[params.userId].socket.emit('moviemime:ring:' + user.socket.id, {
+        user: user.attributes,
+        peerId: params.peerId,
+      });
     });
 
     socket.on('moviemime:video:play', function (params) {

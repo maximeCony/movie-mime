@@ -18,6 +18,12 @@ $(function() {
   */
   window.LOAD_DUST_TEMPATES();
 
+  navigator.getUserMedia = (
+    navigator.getUserMedia || 
+    navigator.webkitGetUserMedia || 
+    navigator.mozGetUserMedia
+  );
+
   window.APP = {
     socket: window.io(),
     user: {},

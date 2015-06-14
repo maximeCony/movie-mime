@@ -6,19 +6,5 @@
 			</video>
 			<span class="glyphicon glyphicon-film"></span> {filename}
 		</div>
-		{! <div class="col-md-2 cams-container">
-			<video id="my-video" autoplay muted class="cam-video"></video>
-			<video id="their-video" autoplay class="cam-video"></video>
-			<button class="btn btn-danger js-hangup">
-				<span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span> 
-				Hangup
-			</button>
-		</div>
-		<div class="col-md-12">
-			<button class="btn btn-success js-call">
-				<span class="glyphicon glyphicon-earphone" aria-hidden="true"></span> 
-				Call
-			</button>
-		</div> !}
 	</div>
 </div>

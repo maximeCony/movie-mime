@@ -1,7 +1,6 @@
 'use strict';
 
 var DustView = require('../components/DustView');
-var _URL = window.URL || window.webkitURL;
 var fullscreenchange = 'webkitfullscreenchange' +
   'mozfullscreenchange' +
   'fullscreenchange';
@@ -30,7 +29,7 @@ module.exports = DustView.extend({
   rendered: function () {
     this.$video = this.$el.find('.js-video');
     this.video = this.$video[0];
-    this.video.src = _URL.createObjectURL(this.file);
+    this.video.src = URL.createObjectURL(this.file);
     this.initEvents();
   },
 
@@ -99,25 +98,5 @@ module.exports = DustView.extend({
       at: this.video.currentTime,
     });
   },
-
-  // toogleFullScreen: function () {
-  //   var isFullScreen = document.fullScreen || 
-  //     document.mozFullScreen || 
-  //     document.webkitIsFullScreen;
-  //   if (isFullScreen) {
-  //     this.$theirVideo.addClass('full-screen-video');
-  //     interact('.full-screen-video')
-  //       .draggable({ 
-  //         inertia: true,
-  //         onmove: this.dragMoveListener,
-  //       })
-  //       .resizable({
-  //         edges: { left: true, right: true, bottom: false, top: false },
-  //       })
-  //       .on('resizemove', this.resizeMove);
-  //   } else {
-  //     this.$theirVideo.removeClass('full-screen-video');
-  //   }
-  // },
 
 });

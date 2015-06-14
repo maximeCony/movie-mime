@@ -3,4 +3,11 @@
 		<span class="glyphicon glyphicon-earphone" aria-hidden="true"></span> 
 		Call {name} 
 	</button>
+	<section class="js-theirVideo-section is-hidden">
+		<video autoplay muted class="cam-video"></video>
+		<button class="btn btn-danger js-hangup">
+			<span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span> 
+			Hangup
+		</button>
+	</section>
 {/user}

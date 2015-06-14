@@ -13,4 +13,6 @@
 {<content}
 	<section id="app"></section>
 	<section class="js-users"></section>
+	<video autoplay muted class="cam-video js-myVideo"></video>
+	<section class="js-cams"></section>
 {/content}
