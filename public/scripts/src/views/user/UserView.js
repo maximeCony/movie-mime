@@ -7,6 +7,8 @@ module.exports = DustView.extend({
 
   templateName: 'user/user.dust',
 
+  className: 'user',
+
   events: {
     'click .js-call': 'ring',
     'click .js-hangup': 'hangup',
