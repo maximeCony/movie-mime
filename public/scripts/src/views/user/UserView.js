@@ -9,6 +9,7 @@ module.exports = DustView.extend({
 
   events: {
     'click .js-call': 'ring',
+    'click .js-hangup': 'hangup',
   },
 
   initialize: function () {
@@ -38,7 +39,7 @@ module.exports = DustView.extend({
       me.$callBtn
         .removeClass('btn-success')
         .addClass('btn-info')
-        .text('Calling...');
+        .button('Calling...');
       me.$myVideo.prop('src', URL.createObjectURL(stream));
       APP.peer = new window.Peer(utils.getPeerOptions());
       APP.peer
@@ -51,7 +52,7 @@ module.exports = DustView.extend({
         .on('call', function (call) {
           me.call = call;
           me.call.answer(APP.localMediaStream);
-          me.call.on('stream', me.onCall.bind(me));
+          me.initCallListeners();
         });
     }, console.error);
   },
@@ -68,18 +69,44 @@ module.exports = DustView.extend({
         APP.localMediaStream = stream;
         me.$backdrop.addClass('is-hidden');
         me.$myVideo.prop('src', URL.createObjectURL(stream));
-        me.call = APP.peer
-          .call(params.peerId, stream)
-          .on('stream', me.onCall.bind(me));
+        me.call = APP.peer.call(params.peerId, stream);
+        me.initCallListeners();
       }, console.error);
     });
   },
 
   onCall: function (remoteStream) {
+    this.$callBtn
+      .removeClass('btn-info')
+      .addClass('btn-success is-hidden')
+      .button('reset');
     this.$theirVideoSection
       .removeClass('is-hidden')
       .find('video')
       .prop('src', URL.createObjectURL(remoteStream));
+  },
+
+  hangup: function () {
+    this.call.close();
+    this.resetView();
+  },
+
+  resetView: function () {
+    this.$callBtn.removeClass('is-hidden');
+    this.$theirVideoSection.addClass('is-hidden');
+  },
+
+  onCallError: function () {
+    // TODO:
+    console.error('Something went wrong.');
+    this.resetView();
+  },
+
+  initCallListeners: function () {
+    this.call
+      .on('stream', this.onCall.bind(this))
+      .on('close', this.resetView.bind(this))
+      .on('error', this.onCallError.bind(this));
   },
 
 });
