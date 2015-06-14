@@ -22,14 +22,6 @@ html, body {
   width: 100%;
 }
 
-#usernameInput {
-  float: right;
-  border: none;
-  font-size: 1.3em;
-  outline: none;
-  text-align: right;
-}
-
 h1.text-muted {
   font-size: 1.7em;
 }
@@ -126,6 +118,7 @@ h1.text-muted:hover .grow {
 .main-header-title {
   font-size: 60px;
 }
+
 .main-header-title span {
   /*text-shadow: 1px 0 1px black;*/
 }
@@ -183,8 +176,12 @@ h1.text-muted:hover .grow {
   z-index: 2147483647;
   position: fixed;
   bottom: 0;
-  left: 0;
+  right: 0;
   width: 200px;
   /* used by interact.js */
   box-sizing: border-box;
+}
+
+.user {
+  width: 200px;
 }
