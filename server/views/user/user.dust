@@ -4,7 +4,7 @@
 		Call {name} 
 	</button>
 	<section class="js-theirVideo-section is-hidden">
-		<video autoplay muted class="cam-video js-userVideo"></video>
+		<video autoplay class="cam-video js-userVideo"></video>
 		<button class="btn btn-danger js-hangup">
 			<span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span> 
 			Hangup
