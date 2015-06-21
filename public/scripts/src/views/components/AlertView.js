@@ -1,6 +1,6 @@
 'use strict';
 
-var DustView = require('./dustView');
+var DustView = require('./DustView');
 
 module.exports = DustView.extend({
 
