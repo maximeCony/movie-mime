@@ -47,7 +47,13 @@ module.exports = DustView.extend({
         continue;
       }
       extension = file.name.split('.').pop();
-      if (subtitleExtensions.indexOf(extension) !== -1) {
+      if (extension === 'srt') {
+        APP.alert(
+          '.srt subtitles are not supported, please convert your file to .vtt', 
+          'warning'
+        );
+      }
+      if (extension === 'vtt') {
         APP.views.localVideoView.subtitleFile = file;
       }
     }
