@@ -1,6 +1,7 @@
 'use strict';
 
 var DustView = require('../components/DustView');
+var subtitleExtensions = ['srt', 'vtt'];
 
 module.exports = DustView.extend({
 
@@ -36,8 +37,20 @@ module.exports = DustView.extend({
   drop: function(e) {
     e.stopPropagation();
     e.preventDefault();
-    var file = e.originalEvent.dataTransfer.files[0];
-    APP.views.localVideoView.setFile(file);
+    var files = e.originalEvent.dataTransfer.files;
+    var file;
+    var extension;
+    for (var i = 0; i < files.length; i++) {
+      file = files[i];
+      if (file.type.indexOf('video') !== -1) {
+        APP.views.localVideoView.videoFile = file;
+        continue;
+      }
+      extension = file.name.split('.').pop();
+      if (subtitleExtensions.indexOf(extension) !== -1) {
+        APP.views.localVideoView.subtitleFile = file;
+      }
+    }
     APP.views.localVideoView.render();
   },
 

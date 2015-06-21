@@ -1,6 +1,8 @@
 <div class="video-container">
 	<div id="movie-container">
 		<video class="js-video" controls>
+			<source src="{videoUrl}">
+			<track kind="subtitles" default src="{subtitleUrl}">
 			Your browser does not support HTML5 video.
 		</video>
 		<span class="glyphicon glyphicon-film"></span> {filename}

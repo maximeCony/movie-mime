@@ -18,18 +18,19 @@ module.exports = DustView.extend({
 
   emitPause: true,
 
-  setFile: function (file) {
-    this.file = file;
-  },
-
   getDustContext: function () {
-    return { filename: this.file.name };
+    return {
+      filename: this.videoFile.name,
+      videoUrl: this.videoFile ?
+        URL.createObjectURL(this.videoFile) : null,
+      subtitleUrl: this.subtitleFile ?
+        URL.createObjectURL(this.subtitleFile) : null,
+    };
   },
 
   rendered: function () {
     this.$video = this.$el.find('.js-video');
     this.video = this.$video[0];
-    this.video.src = URL.createObjectURL(this.file);
     this.initEvents();
   },
 
@@ -123,34 +124,34 @@ module.exports = DustView.extend({
   },
 
   resizeMove: function (e) {
-      var target = e.target;
-      var x = (parseFloat(target.getAttribute('data-x')) || 0);
-      var y = (parseFloat(target.getAttribute('data-y')) || 0);
-      // update the element's style
-      target.style.width  = e.rect.width + 'px';
-      // target.style.height = e.rect.height + 'px';
-      // translate when resizing from top or left edges
-      x += e.deltaRect.left;
-      target.style.webkitTransform = 
-        target.style.transform =
-        'translate(' + x + 'px,' + y + 'px)';
-      target.setAttribute('data-x', x);
-      target.setAttribute('data-y', y);
-      target.textContent = e.rect.width + '×' + e.rect.height;
-    },
-
-    dragMoveListener: function (e) {
-      var target = e.target;
-      // keep the dragged position in the data-x/data-y attributes
-      var x = (parseFloat(target.getAttribute('data-x')) || 0) + e.dx;
-      var y = (parseFloat(target.getAttribute('data-y')) || 0) + e.dy;
-      // translate the element
-      target.style.webkitTransform =
+    var target = e.target;
+    var x = (parseFloat(target.getAttribute('data-x')) || 0);
+    var y = (parseFloat(target.getAttribute('data-y')) || 0);
+    // update the element's style
+    target.style.width  = e.rect.width + 'px';
+    // target.style.height = e.rect.height + 'px';
+    // translate when resizing from top or left edges
+    x += e.deltaRect.left;
+    target.style.webkitTransform = 
       target.style.transform =
-        'translate(' + x + 'px, ' + y + 'px)';
-      // update the posiion attributes
-      target.setAttribute('data-x', x);
-      target.setAttribute('data-y', y);
-    },
+      'translate(' + x + 'px,' + y + 'px)';
+    target.setAttribute('data-x', x);
+    target.setAttribute('data-y', y);
+    target.textContent = e.rect.width + '×' + e.rect.height;
+  },
+
+  dragMoveListener: function (e) {
+    var target = e.target;
+    // keep the dragged position in the data-x/data-y attributes
+    var x = (parseFloat(target.getAttribute('data-x')) || 0) + e.dx;
+    var y = (parseFloat(target.getAttribute('data-y')) || 0) + e.dy;
+    // translate the element
+    target.style.webkitTransform =
+    target.style.transform =
+      'translate(' + x + 'px, ' + y + 'px)';
+    // update the posiion attributes
+    target.setAttribute('data-x', x);
+    target.setAttribute('data-y', y);
+  },
 
 });
