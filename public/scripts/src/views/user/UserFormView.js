@@ -19,4 +19,8 @@ module.exports = DustView.extend({
     APP.views.roomView.start();
   },
 
+  rendered: function () {
+    this.$el.find('input[name=username]').focus();
+  },
+
 });

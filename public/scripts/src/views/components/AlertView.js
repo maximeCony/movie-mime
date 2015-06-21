@@ -23,7 +23,7 @@ module.exports = DustView.extend({
 
   rendered: function() {
     if (this.options.timeout !== false) {
-      setTimeout(this.dismiss.bind(this), this.options.timeout || 5000);
+      setTimeout(this.dismiss.bind(this), this.options.timeout || 4000);
     }
   },
 

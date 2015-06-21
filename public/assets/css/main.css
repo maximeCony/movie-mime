@@ -202,3 +202,14 @@ h1.text-muted:hover .grow {
   border-radius: 0;
   margin-bottom: -14px;
 }
+
+.user-form input {
+  font-size: 30px;
+  border: none;
+  width: 470px;
+}
+
+.user-form input:focus {
+  /*remove Chrome's blue border*/
+  outline:0;
+}
