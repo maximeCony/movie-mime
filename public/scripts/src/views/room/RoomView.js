@@ -19,17 +19,23 @@ module.exports = Backbone.View.extend({
     APP.socket
       .on('moviemime:room:joined', this.addUsers.bind(this))
       .on('moviemime:room:newUser', this.addUser.bind(this))
-      .on('moviemime:room:deleteUser', this.removeUser.bind(this));
+      .on('moviemime:room:deleteUser', this.removeUser.bind(this))
+      .on('reconnect', this.joinRoom.bind(this));
   },
 
   start: function () {
     APP.user.name = localStorage.getItem('username');
     if (!APP.user.name) return APP.views.userFormView.render();
+    this.joinRoom();
+    APP.views.waitingRoomView.render();
+  },
+
+  joinRoom: function () {
+    APP.collections.users.reset();
     APP.socket.emit('moviemime:room:join', {
       roomId: window.ROOM_ID,
       userAttributes: { name: APP.user.name },
     });
-    APP.views.waitingRoomView.render();
   },
 
   addUsers: function (params) {

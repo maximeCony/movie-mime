@@ -129,14 +129,13 @@ h1.text-muted:hover .grow {
   margin-right: 1px;
 }
 
-.to-do-list {
+#app {
   list-style: none;
   margin: auto;
   text-align: center;
-  width: 680px;
 }
 
-#js-shareableLink {
+#shareableLink {
   text-align: center;
   border: none;
   font-size: 20px;
@@ -168,10 +167,6 @@ h1.text-muted:hover .grow {
   padding: 0;
 }
 
-.cam-video {
-  width:100%
-}
-
 .full-screen-video {
   z-index: 2147483647;
   position: fixed;
@@ -183,5 +178,14 @@ h1.text-muted:hover .grow {
 }
 
 .user {
+  position: relative;
+  display: inline-block !important;
   width: 200px;
+}
+
+.js-hangup {
+  position: absolute;
+  left: 0;
+  bottom: 5px;
+  border-radius: 4px 4px 4px 0px;
 }

@@ -1,5 +1,5 @@
 <h2>This is your private room,</h2>
 <br>
-<input type="text" class="js-shareableLink" readonly value="{link}">
+<input id="shareableLink" type="text" class="js-shareableLink" readonly value="{link}">
 <br>
 <h2>Send this link to the other person and wait for her/him to join you.</h2>

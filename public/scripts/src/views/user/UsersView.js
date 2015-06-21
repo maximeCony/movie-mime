@@ -14,7 +14,7 @@ module.exports = Backbone.View.extend({
     // only render other users
     if (model.id === APP.socket.id) return;
     var view = new UserView({ model: model });
-    this.$el.append(view.render().$el.fadeIn());
+    this.$el.prepend(view.render().$el.fadeIn());
   },
 
 });

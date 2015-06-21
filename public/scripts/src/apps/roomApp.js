@@ -25,7 +25,7 @@ $(function() {
   );
 
   window.APP = {
-    socket: window.io(),
+    socket: window.io({ reconnection: true }),
     user: {},
     views: {},
     collections: {

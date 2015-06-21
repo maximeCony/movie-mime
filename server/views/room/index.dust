@@ -15,6 +15,6 @@
 	<section class="js-users">
 		<div class="user">
 			<video autoplay muted class="cam-video js-myVideo"></video>
-		</div>		
+		</div>	
 	</section>
 {/content}

@@ -1,10 +1,8 @@
-<div class="container-fluid" style="text-align: center;">
-	<div class="row video-container">
-		<div id="movie-container" class="col-md-12">
-			<video class="js-video" controls>
-				Your browser does not support HTML5 video.
-			</video>
-			<span class="glyphicon glyphicon-film"></span> {filename}
-		</div>
+<div class="video-container">
+	<div id="movie-container">
+		<video class="js-video" controls>
+			Your browser does not support HTML5 video.
+		</video>
+		<span class="glyphicon glyphicon-film"></span> {filename}
 	</div>
 </div>

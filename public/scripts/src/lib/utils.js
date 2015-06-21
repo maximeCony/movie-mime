@@ -32,7 +32,10 @@ module.exports = {
     return {
       audio: true,
       video: {
-        mandatory: { maxHeight: 150 },
+        mandatory: { 
+          maxWidth: 200,
+          maxHeight: 112,
+        },
       },
     };
   },

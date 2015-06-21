@@ -16,6 +16,7 @@ module.exports = DustView.extend({
 
   initialize: function () {
     this.listenTo(this.model, 'remove', this.remove);
+    this.listenTo(this.model.collection, 'reset', this.remove);
     this.$backdrop = $('.backdrop');
     this.$myVideo = $('.js-myVideo');
     APP.socket.on('moviemime:ring:' + this.model.id, this.answer.bind(this));

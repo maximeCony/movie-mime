@@ -6,8 +6,7 @@
 	<section class="js-theirVideo-section is-hidden">
 		<video autoplay class="cam-video js-userVideo"></video>
 		<button class="btn btn-danger js-hangup">
-			<span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span> 
-			Hangup
+			<span class="glyphicon glyphicon-earphone" aria-hidden="true"></span> 
 		</button>
 	</section>
 {/user}
