@@ -11,6 +11,7 @@ $(function() {
   window.Backbone.$ = $;
 
   var RoomView = require('../views/room/RoomView');
+  var AlertView = require('../views/components/AlertView');
 
   /* 
   * load precompiled Dust templates 
@@ -31,6 +32,15 @@ $(function() {
     collections: {
       users: new Backbone.Collection(),
     },
+  };
+
+  var $alerts = $('.alerts');
+  APP.alert = function (message, type) {
+    var view = new AlertView({
+      message: message,
+      type: type,
+    });
+    $alerts.append(view.render().$el);
   };
 
   APP.views.roomView = new RoomView();

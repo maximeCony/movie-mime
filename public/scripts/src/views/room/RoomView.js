@@ -20,7 +20,8 @@ module.exports = Backbone.View.extend({
       .on('moviemime:room:joined', this.addUsers.bind(this))
       .on('moviemime:room:newUser', this.addUser.bind(this))
       .on('moviemime:room:deleteUser', this.removeUser.bind(this))
-      .on('reconnect', this.joinRoom.bind(this));
+      .on('disconnect', this.disconnect.bind(this))
+      .on('reconnect', this.reconnect.bind(this));
   },
 
   start: function () {
@@ -31,23 +32,38 @@ module.exports = Backbone.View.extend({
   },
 
   joinRoom: function () {
-    APP.collections.users.reset();
     APP.socket.emit('moviemime:room:join', {
       roomId: window.ROOM_ID,
       userAttributes: { name: APP.user.name },
     });
   },
 
+  reconnect: function () {
+    APP.alert('Connexion retreived.', 'success');
+    APP.collections.users.reset();
+    this.joinRoom();
+  },
+
+  disconnect: function () {
+    APP.alert('Connexion lost.', 'danger');
+  },
+
   addUsers: function (params) {
+    params.users.forEach(function (user) {
+      APP.alert(user.name + ' was already there.', 'success');
+    });
     APP.collections.users.add(params.users);
   },
   
   addUser: function (user) {
+    APP.alert(user.name + ' joined.', 'success');
     APP.collections.users.add(user);
   },
 
   removeUser: function (id) {
-    APP.collections.users.remove(id);
+    var user = APP.collections.users.get(id);
+    APP.alert(user.attributes.name + ' left.', 'warning');
+    APP.collections.users.remove(user);
   },
 
 });

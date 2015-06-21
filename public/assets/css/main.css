@@ -189,3 +189,16 @@ h1.text-muted:hover .grow {
   bottom: 5px;
   border-radius: 4px 4px 4px 0px;
 }
+
+.alerts {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2147483647;
+}
+
+.alert {
+  border-radius: 0;
+  margin-bottom: -14px;
+}
