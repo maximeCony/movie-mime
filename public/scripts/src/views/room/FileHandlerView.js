@@ -42,20 +42,18 @@ module.exports = DustView.extend({
     var extension;
     for (var i = 0; i < files.length; i++) {
       file = files[i];
-      if (file.type.indexOf('video') !== -1) {
-        APP.views.localVideoView.videoFile = file;
-        continue;
-      }
       extension = file.name.split('.').pop();
       if (extension === 'srt') {
         APP.alert(
-          '.srt subtitles are not supported, please convert your file to .vtt', 
+          '.srt subtitles are not supported, please convert your file to .vtt',
           'warning'
         );
       }
       if (extension === 'vtt') {
         APP.views.localVideoView.subtitleFile = file;
+        continue;
       }
+      APP.views.localVideoView.videoFile = file;
     }
     APP.views.localVideoView.render();
   },
