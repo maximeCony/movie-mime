@@ -31,17 +31,20 @@ module.exports = Backbone.View.extend({
     APP.views.waitingRoomView.render();
   },
 
-  joinRoom: function () {
+  joinRoom: function (recoverCallFromDisconnect) {
     APP.socket.emit('moviemime:room:join', {
       roomId: window.ROOM_ID,
-      userAttributes: { name: APP.user.name },
+      userAttributes: {
+        name: APP.user.name,
+        recoverCallFromDisconnect: recoverCallFromDisconnect,
+      },
     });
   },
 
   reconnect: function () {
     APP.alert('Connexion retreived.', 'success');
     APP.collections.users.reset();
-    this.joinRoom();
+    this.joinRoom(true);
   },
 
   disconnect: function () {
@@ -54,7 +57,7 @@ module.exports = Backbone.View.extend({
     });
     APP.collections.users.add(params.users);
   },
-  
+
   addUser: function (user) {
     APP.alert(user.name + ' joined.', 'success');
     APP.collections.users.add(user);

@@ -20,6 +20,9 @@ module.exports = DustView.extend({
     this.$backdrop = $('.backdrop');
     this.$myVideo = $('.js-myVideo');
     APP.socket.on('moviemime:ring:' + this.model.id, this.answer.bind(this));
+    if (this.model.attributes.recoverCallFromDisconnect) {
+      this.ring();
+    }
   },
 
   getDustContext: function() {
